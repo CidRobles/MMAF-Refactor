@@ -1,13 +1,29 @@
 <script>
-    // Config
+    // CONFIG
     var client = 'MMAF'
     var form = '[[S120:dc:donFormId]]'
 
-    // Tools
+    // TOOLS
     var urlParams = new URLSearchParams(window.location.search)
+
+    // Stores item in session
+    function storeInSession(name, value) {
+        sessionStorage.setItem(client + '-' + form + '-' + name, value)
+    }
+
+    // Retrieves item from session
+    function retrieveFromSession(name) {
+        return sessionStorage.getItem(client + '-' + form + '-' + name)
+    }
+
+    // Separate thousands with commas
+    function commaSeparated(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
 
     // GLOBAL SCOPE
     var MEMBERSHIP_TYPE = ''
+    var MEMBERSHIP_AMOUNT
     var MILITARY_STATUS = ''
     var CARDHOLDERS_COUNT = 0
 
@@ -32,9 +48,11 @@
         switch (tag) {
             case '1':
                 $('#level_flexibleduration').val('Y:2')
+                storeInSession('gift-duration', 'Y:2')
                 break;
             case '2':
                 $('#level_flexibleduration').val('Y:0')
+                storeInSession('gift-duration', 'Y:0')
                 break;
             default:
                 break;
@@ -60,35 +78,36 @@
                 MILITARY_STATUS = ''
                 break;
         }
-
+        storeInSession('military-status', MILITARY_STATUS)
         renderGiftArray()
     }
 
     function setMembershipType(type) {
-        console.log(type)
+        if (String(type).includes('Lifetime')) {
+            MEMBERSHIP_TYPE = 'lifetime'
+        } else if (String(type).includes('Active')) {
+            MEMBERSHIP_TYPE = 'active'
+        } else if (String(type).includes('Veteran')) {
+            MEMBERSHIP_TYPE = 'veteran'
+        }
+        storeInSession('membership-type', MEMBERSHIP_TYPE)
+        renderGiftArray()
+    }
+
+    function setMembershipAmount(amount) {
+        // MEMBERSHIP_AMOUNT = Number(String(amount).replace('$', '').replace(',', '')).toFixed(2)
+        MEMBERSHIP_AMOUNT = amount
+        console.log(MEMBERSHIP_AMOUNT)
+        storeInSession('membership-amount', MEMBERSHIP_AMOUNT)
     }
 
     function setCardholders(cardholders) {
         CARDHOLDERS_COUNT = Number(cardholders)
+        storeInSession('cardholders', CARDHOLDERS_COUNT)
         renderGiftArray()
     }
 
     function renderGiftArray() {
-        // Check for membership type
-        
-        // Check for cardholders
-        if (CARDHOLDERS_COUNT == 0) {
-            $('#lifetime:first-child').show()
-            $('#active-duty:first-child').show()
-            $('#veteran:first-child').show()
-
-            $('#lifetime:not(:first-child)').hide()
-            $('#active-duty:not(:first-child)').hide()
-            $('#veteran:not(:first-child)').hide()
-        } else {
-            $('.donation-level-container:contains(' + CARDHOLDERS_COUNT + ' Cardholder)').show();
-            $('.donation-level-container:not(:contains(' + CARDHOLDERS_COUNT + ' Cardholder))').hide();
-        }
         // Check for status
         switch (MILITARY_STATUS) {
             case '':
@@ -119,10 +138,22 @@
             default:
                 break;
         }
+        // Check for cardholders
+        if (CARDHOLDERS_COUNT == 0) {
+            $('#lifetime:first-child').show()
+            $('#active-duty:first-child').show()
+            $('#veteran:first-child').show()
+
+            $('#lifetime:not(:first-child)').hide()
+            $('#active-duty:not(:first-child)').hide()
+            $('#veteran:not(:first-child)').hide()
+        } else {
+            $('.donation-level-container:contains(' + CARDHOLDERS_COUNT + ' Cardholder)').show();
+            $('.donation-level-container:not(:contains(' + CARDHOLDERS_COUNT + ' Cardholder))').hide();
+        }
     }
 
     function addEventListeners() {
-        
         // Military status
         $('input[name="military_status_radio"]').each(function (index, element) {
             $('input[value="' + element.value + '"').on('click', function () {
@@ -131,10 +162,11 @@
         })
 
         // Membership type
-        $('input[name="level_flexibleexpanded"]').each(function( index, element) {
-            $('#'+ element.id).on('click', function(){
-                // Search for the label
-                $('label[for="element.id"]').find('.donation-level-label-container')
+        $('input[name="level_flexibleexpanded"]').each(function (index, element) {
+            $('#' + element.id).on('click', function () {
+                // Search for the labels
+                setMembershipType($('label[for="' + element.id + '"]').find('.donation-level-label-container').text())
+                setMembershipAmount($('label[for="' + element.id + '"]').find('.donation-level-amount-container').text())
             })
         })
 
@@ -157,7 +189,7 @@
 
     function setInitialState() {
         // Check for membership
-
+        
     }
 
     jQuery(document).ready(function () {
