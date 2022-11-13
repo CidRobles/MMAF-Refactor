@@ -1,0 +1,169 @@
+<script>
+    // Config
+    var client = 'MMAF'
+    var form = '[[S120:dc:donFormId]]'
+
+    // Tools
+    var urlParams = new URLSearchParams(window.location.search)
+
+    // GLOBAL SCOPE
+    var MEMBERSHIP_TYPE = ''
+    var MILITARY_STATUS = ''
+    var CARDHOLDERS_COUNT = 0
+
+    // FUNCTIONS
+    function formatMembershipLevels() {
+        $('.donation-level-container:contains("Lifetime Benefactor")').each(function (index, element) {
+            $('#lifetime').append(element)
+        })
+
+        $('.donation-level-container:contains("Veteran Membership")').each(function (index, element) {
+            $('#veteran').append(element)
+        })
+
+        $('.donation-level-container:contains("Active Duty Membership")').each(function (index, element) {
+            $('#active-duty').append(element)
+        })
+
+        addEventListeners()
+    }
+
+    function handleGiftDuration(tag) {
+        switch (tag) {
+            case '1':
+                $('#level_flexibleduration').val('Y:2')
+                break;
+            case '2':
+                $('#level_flexibleduration').val('Y:0')
+                break;
+            default:
+                break;
+        }
+    }
+
+    function setMilitaryStatus(status) {
+        switch (status) {
+            case ' Active':
+                MILITARY_STATUS = 'active'
+                break;
+            case ' Reserves':
+                MILITARY_STATUS = 'reserves'
+                break;
+            case ' Former':
+                MILITARY_STATUS = 'former'
+                break;
+            case ' Retired':
+                MILITARY_STATUS = 'retired'
+                break;
+
+            default:
+                MILITARY_STATUS = ''
+                break;
+        }
+
+        renderGiftArray()
+    }
+
+    function setMembershipType(type) {
+        console.log(type)
+    }
+
+    function setCardholders(cardholders) {
+        CARDHOLDERS_COUNT = Number(cardholders)
+        renderGiftArray()
+    }
+
+    function renderGiftArray() {
+        // Check for membership type
+        
+        // Check for cardholders
+        if (CARDHOLDERS_COUNT == 0) {
+            $('#lifetime:first-child').show()
+            $('#active-duty:first-child').show()
+            $('#veteran:first-child').show()
+
+            $('#lifetime:not(:first-child)').hide()
+            $('#active-duty:not(:first-child)').hide()
+            $('#veteran:not(:first-child)').hide()
+        } else {
+            $('.donation-level-container:contains(' + CARDHOLDERS_COUNT + ' Cardholder)').show();
+            $('.donation-level-container:not(:contains(' + CARDHOLDERS_COUNT + ' Cardholder))').hide();
+        }
+        // Check for status
+        switch (MILITARY_STATUS) {
+            case '':
+                $('#lifetime').show()
+                $('#active-duty').show()
+                $('#veteran').show()
+                break;
+            case 'active':
+                $('#lifetime').show()
+                $('#active-duty').show()
+                $('#veteran').hide()
+                break;
+            case 'reserves':
+                $('#lifetime').show()
+                $('#active-duty').show()
+                $('#veteran').hide()
+                break;
+            case 'former':
+                $('#lifetime').show()
+                $('#active-duty').hide()
+                $('#veteran').show()
+                break;
+            case 'retired':
+                $('#lifetime').show()
+                $('#active-duty').hide()
+                $('#veteran').show()
+                break;
+            default:
+                break;
+        }
+    }
+
+    function addEventListeners() {
+        
+        // Military status
+        $('input[name="military_status_radio"]').each(function (index, element) {
+            $('input[value="' + element.value + '"').on('click', function () {
+                setMilitaryStatus(this.value)
+            })
+        })
+
+        // Membership type
+        $('input[name="level_flexibleexpanded"]').each(function( index, element) {
+            $('#'+ element.id).on('click', function(){
+                // Search for the label
+                $('label[for="element.id"]').find('.donation-level-label-container')
+            })
+        })
+
+        // Gift duration
+        $('input[name="level_flexiblegift_type"]').each(function (index, element) {
+            $('#' + element.id).on('click', function () {
+                handleGiftDuration(this.value)
+            })
+        })
+
+        // Cardholders
+        $('input[name="additional_cardholders_number_radio"]').each(function (index, element) {
+            $('#' + element.id).on('click', function () {
+                setCardholders(this.value)
+            })
+        })
+
+        setInitialState()
+    }
+
+    function setInitialState() {
+        // Check for membership
+
+    }
+
+    jQuery(document).ready(function () {
+        // Check page   
+        if (urlParams.get(form + '.donation') === 'form1') {
+            formatMembershipLevels()
+        }
+    });
+</script>

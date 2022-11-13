@@ -1,0 +1,2707 @@
+<style type="text/css">
+    .main-wrapper {
+        margin: 0;
+        padding: 35px 0px;
+    }
+
+    header {
+        background: #fff;
+        font-family: 'Open Sans', sans-serif;
+        padding: 19px 0px;
+        position: relative;
+        -webkit-box-shadow: none !important;
+        -moz-box-shadow: 0px 0px 12px 0px rgba(67, 67, 67, 0.56);
+        /* box-shadow: 0px 0px 12px 0px rgb(67 67 67 / 56%); */
+    }
+
+    #content-secondary {
+        display: none;
+    }
+
+    .form-progress-bar {
+        margin: 25px 0 0 25px;
+    }
+
+    /* div#additional_amount_row {
+        transform: translate(0px, -280px);
+        /* display: revert; */
+    /* position: absolute; */
+    /* } */
+    /* div#level_flexible_row {
+        margin-bottom: 50px;
+    } */
+
+    /* #membership-annually-img{
+      height: 46px !important;
+      padding: 0;
+      background-image: url(../images/content/pagebuilder/membershiactive13062.png);
+      background-position: 30% top;
+      background-repeat: no-repeat;
+      background-size: auto 46px;
+    } */
+
+    #membership-annually-img-mobile {
+        display: none;
+    }
+
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
+    body {
+        position: relative
+    }
+
+    h1 {
+        color: #5f5c5c;
+        font-family: 'Book Antiqua', 'Palatino Linotype', Palatino;
+        font-weight: normal;
+        font-size: 29px;
+        text-transform: none;
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    h2 {
+        line-height: 1.1;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    select {
+        background-image: url(../images/sort.gif);
+        background-repeat: no-repeat;
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        /* Mozilla */
+        -o-appearance: none !important;
+        /* Opera */
+        -ms-appearance: none !important;
+        background-position-x: 99%;
+        background-position-y: center;
+    }
+
+    input#billing_info_same_as_donorname {
+        -webkit-appearance: auto !important;
+    }
+
+    label {
+        margin-left: 15px;
+    }
+
+
+    .sealContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        flex-direction: row;
+        row-gap: 101px;
+        max-width: 100%;
+        width: 63em !important;
+        margin: 0 auto !important;
+        column-gap: 210px;
+        position: absolute;
+        transform: translateY(50px);
+    }
+
+    form#CatException p,
+    form#CatException input {
+        margin: 10px 0px !important;
+    }
+
+
+    div#main-content {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    #content-secondary {
+        width: 270px;
+        float: left;
+        padding: 0 20px 20px 0;
+    }
+
+    #content-secondary .nav {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+
+    #content-secondary>div>ul>li {
+        margin-bottom: 0;
+        display: block;
+        width: 215px;
+    }
+
+    #content-secondary .nav-tabs>li {
+        float: left;
+    }
+
+    #content-secondary.nav>li {
+        position: relative;
+    }
+
+    #content-secondary>div>ul>li>a {
+        display: block;
+        width: 100%;
+        padding: 9px 20px;
+        border-radius: 0;
+        border: none;
+        font-family: "Cormorant Garamond", serif;
+        color: #2c2625;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+        box-shadow: 2px 2px 1px 0 #ebebeb;
+        border-bottom: 2px solid transparent;
+        transition: all ease 0s;
+    }
+
+    #appAreaNoWidthClearFix {
+        width: auto !important;
+    }
+
+    div.donation-level-general-ask,
+    div.html-caption-container {
+        max-width: 100% !important;
+    }
+
+    div.donation-form-container.responsive {
+        padding: 0px !important;
+        border-radius: 30px 0px 30px 0px !important;
+        border: 1px solid #eaeaea;
+        border-left: 0;
+        border-right: 0;
+        background-color: #f8f8f8;
+        transition: 0.5s;
+        max-width: 100%;
+    }
+
+    div.responsive a.step-button:hover,
+    div.responsive button.step-button:hover,
+    div.responsive input.step-button:hover {
+        background-image: none !important;
+        background-color: #c41230;
+        opacity: .75;
+        max-width: 100% !important;
+    }
+
+    #content-secondary>div>ul>li>a:hover,
+    #content-secondary .nav a.active {
+        position: relative;
+        border-bottom: 2px solid #dcc39a;
+        background-color: #000;
+        color: #dcc39a;
+    }
+
+    #content-secondary .nav-tabs {
+        border: 0px;
+    }
+
+    #content-secondary h3 {
+        margin: 39px 0 20px;
+        font-family: "Nunito Sans", sans-serif;
+        color: #a6825e;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 21px;
+    }
+
+    #content-secondary .nav a.active::after,
+    #content-secondary>div>ul>li>a:hover::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        bottom: 0;
+        top: 0;
+        right: -20px;
+        overflow: hidden;
+        background-image: linear-gradient(to top right, #000 49%, transparent 52%), linear-gradient(to bottom right, #000 49%, transparent 52%);
+        background-size: 100% 51%;
+        background-position: top left, bottom left;
+        background-repeat: no-repeat;
+    }
+
+    div.progress-bar-step-current div.progress-bar-step-number-container {
+        background: #004684;
+    }
+
+    .section-header-bar {
+        border-top: 1px solid #ccc;
+        padding-top: 20px;
+        margin: 0 15px;
+    }
+
+    .mHeader {
+        font-family: adobe-garamond-pro, serif !important;
+        font-size: 38px;
+        color: #ab9064;
+        margin: 25px 3.9em;
+    }
+
+    .bnftList {
+        background: #9b8051;
+        text-transform: uppercase;
+        color: white;
+        line-height: 1.6;
+        padding: 15px 3.5em;
+    }
+
+    .bnftList ul li {
+        font-size: 11pt;
+        font-weight: bold;
+    }
+
+    .mStatus {
+        font-family: 'Gotham', sans-serif;
+        font-size: 31px;
+        color: #063471;
+        margin: 25px 3.9em;
+    }
+
+    label[for="military_status_dropdown"] {
+        font-size: 26px;
+        font-weight: bold;
+        text-align: start;
+    }
+
+    .headerL {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: start;
+    }
+
+    input#billing_info_same_as_donorname {
+        margin-top: 10px;
+        margin-left: 15px;
+    }
+
+    label[for="billing_info_same_as_donorname"] {
+        margin-left: 5px !important;
+    }
+
+    input#donor_email_opt_inname {
+        margin-left: 25px;
+        margin-top: 10px;
+    }
+
+    form .responsive .form-row .row .field-input>input[type="text"],
+    form .responsive .form-row .row .field-input>input[type="email"],
+    form .responsive .form-row .row .field-input>select,
+    form .responsive .form-row .row .field-input>textarea,
+    form .responsive .form-row .form-content>input[type="text"],
+    form .responsive .form-row .form-content>input[type="email"],
+    form .responsive .form-row .form-content>select,
+    form .responsive .form-row .form-content>textarea,
+    form .responsive div[id^="tribute_notify_"] input[type="text"],
+    #ecard_send_date_MONTH,
+    #ecard_send_date_DAY,
+    #ecard_send_date_YEAR,
+    div.responsive select,
+    div.responsive input[type="text"] {
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 24px;
+        color: #333;
+        height: 3.4em;
+        margin: 0 15px;
+        padding: 8px 10px 6px 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus,
+    select:focus {
+        outline: -webkit-focus-ring-color auto 4px;
+        outline-color: rgba(101, 45, 137, 0.25);
+    }
+
+    label[for="donor-organization-namename"],
+    label[for="billing_title"],
+    label[for="billing_first_namename"],
+    label[for="billing_first_namename"],
+    label[for="billing_last_namename"],
+    label[for="billing_suffix"],
+    label[for="billing_addr_street1name"],
+    label[for="billing_addr_street2name"],
+    label[for="billing_addr_cityname"],
+    label[for="billing_addr_state"],
+    label[for="billing_addr_zipname"],
+    label[for="billing_addr_country"],
+    label[for="donor_email_addressname"] {
+        color: #262626 !important;
+        font-size: 22px;
+    }
+
+    label[for="responsive_payment_typecc_numbername"],
+    .label-text,
+    .FormLabelText {
+        color: #262626 !important;
+        font-size: 22px;
+        font-weight: normal;
+    }
+
+    label[for="responsive_payment_typerouting_numbername"],
+    label[for="responsive_payment_typebank_accountname"],
+    label[for="responsive_payment_typeverify_bank_accountname"] {
+        color: #262626 !important;
+        font-size: 22px;
+    }
+
+    label[for="notification-opts"],
+    label[for="tribute_type"],
+    label[for="tribute_honoree_first_namename"],
+    label[for="tribute_honoree_last_namename"],
+    label[for="tribute_notify_recip_namename"],
+    label[for="tribute_notify_recip_street1name"],
+    label[for="tribute_notify_recip_cityname"],
+    label[for="tribute_notify_recip_state"],
+    label[for="tribute_notify_recip_zipname"],
+    label[for="tribute_message_bodyname"],
+    label[for="tribute_message_closingname"],
+    label[for="tribute_signaturename"],
+    label[for="ecard_recpientsname"],
+    label[for="tribute_ecard_subjectname"],
+    label[for="tribute_ecard_messagename"],
+    label[for="e_card_copy_sendername"],
+    label[for="select_gridname"] {
+        color: #262626 !important;
+        font-size: 22px;
+    }
+
+
+    label[for="tribute_notify_recip_namename"]:after,
+    label[for="tribute_notify_recip_street1name"]:after,
+    label[for="tribute_notify_recip_cityname"]:after,
+    label[for="tribute_notify_recip_state"]:after,
+    label[for="tribute_notify_recip_zipname"]:after,
+    label[for="tribute_message_bodyname"]:after,
+    label[for="tribute_message_closingname"]:after,
+    label[for="tribute_signaturename"]:after,
+    label[for="donor-organization-namename"]:after,
+    label[for="responsive_payment_typecc_numbername"],
+    .label-text,
+    .FormLabelTex,
+    label[for="responsive_payment_typecc_exp_date_MONTH"] {
+        content: " *";
+        color: #b50025;
+    }
+
+    div.responsive span.field-required {
+        display: none;
+    }
+
+    label[for="military_status_dropdown"]:after,
+    label[for="donor_first_namename"]:after,
+    label[for="donor_last_namename"]:after,
+    label[for="donor_addr_street1name"]:after,
+    label[for="donor_addr_cityname"]:after,
+    label[for="donor_addr_state"]:after,
+    label[for="donor_addr_zipname"]:after,
+    label[for="donor_addr_country"]:after,
+    span.FormLabelText:after,
+    .frequency legend:after {
+        content: " *";
+        color: #b50025;
+    }
+
+
+    label[for="birtdate_date_MONTH"]:after,
+    label[for="military_branch_dropdown"]:after,
+    label[for="discharge_status_dropdown"]:after,
+    label[for="service_start_date_date_MONTH"]:after,
+    label[for="service_end_date_date_MONTH"]:after,
+    label[for="time_of_service_dropdown"]:after,
+    label[for="last_command_before_eas_input"]:after,
+    label[for="highest_rank_input"]:after {
+        content: " *";
+        color: #b50025;
+    }
+
+
+    label[for="billing_first_namename"]:after,
+    label[for="billing_last_namename"]:after,
+    label[for="billing_addr_street1name"]:after,
+    label[for="billing_addr_cityname"]:after,
+    label[for="billing_addr_state"]:after,
+    label[for="billing_addr_zipname"]:after,
+    label[for="billing_addr_country"]:after,
+    label[for="donor_email_addressname"]:after {
+        content: " *";
+        color: #b50025;
+    }
+
+    label[for="responsive_payment_typecc_numbername"]:after,
+    label[for="responsive_payment_typecc_exp_date_MONTH"]:after {
+        content: " *";
+        color: #b50025;
+    }
+
+    select#responsive_payment_typecc_exp_date_MONTH,
+    select#responsive_payment_typecc_exp_date_YEAR,
+    div.payment-field-container #responsive_payment_typecc_cvv_row input {
+        width: 7em;
+        background-position-x: 95% !important;
+    }
+
+    div.responsive label {
+        font-size: 22px;
+        font-weight: normal;
+    }
+
+
+    div#payment_cc_container {
+        margin: 0 25px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    #payment_cc_container h3 {
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    div#responsive_payment_typecc_type_row {
+        margin-left: 20px;
+        /* zoom: 1.5; */
+    }
+
+    div.payment-field-container #responsive_payment_typecc_number_row input {
+        width: 58em;
+        height: 4em;
+    }
+
+    a.HelpLink {
+        color: #063471 !important;
+        position: absolute;
+        transform: translate(75px, 45px);
+        font-size: 22px;
+    }
+
+    div.responsive legend {
+        float: none;
+        font-size: 22px !important;
+        font-family: inherit;
+        border-bottom: none;
+        max-width: 96%;
+        border-top: 1px solid #ccc;
+        padding-top: 20px;
+        margin: 0 15px;
+    }
+
+    fieldset,
+    legend {
+        display: flex;
+        margin: 0 5px;
+    }
+
+    .donation-levels {
+        margin-left: 4px;
+        column-gap: 3px;
+    }
+
+    input#secondary_age_2_radio,
+    input#secondary_age_3_radio,
+    input#secondary_age_4_radio,
+    input#secondary_age_6_radio {
+        margin: 0px 0px 3px 11px;
+    }
+
+    div.form-input-label-block,
+    div.donation-level-expanded-label {
+        max-width: 100%;
+    }
+
+    label.custom-element-checkbox-label {
+        margin-left: 5px;
+        font-weight: bold !important;
+    }
+
+    div.form-input-label-block label[for="birtdate_date_MONTH"] {
+        margin-left: 50px;
+    }
+
+    fieldset>label[for="birtdate_date_MONTH"] {
+        display: none;
+    }
+
+    fieldset>label[for="service_start_date_date_MONTH"] {
+        display: none;
+    }
+
+    fieldset>label[for="service_end_date_date_MONTH"] {
+        display: none;
+    }
+
+    label[for="additional_amountname"] {
+        display: none;
+    }
+
+    label[for="level_flexibleexpanded9482"],
+    label[for="level_flexibleexpanded9467"],
+    label[for="level_flexibleexpanded9463"],
+    label[for="level_flexibleexpanded9464"],
+    label[for="level_flexibleexpanded9465"],
+    label[for="level_flexibleexpanded9466"],
+    label[for="level_flexibleexpanded9466"],
+    label[for="level_flexibleexpanded9461"],
+    label[for="level_flexibleexpanded9462"],
+    label[for="level_flexibleexpanded9521"],
+    label[for="level_flexibleexpanded9522"],
+    label[for="level_flexibleexpanded9522"],
+    label[for="level_flexibleexpanded9468"],
+    label[for="level_flexibleexpanded9523"],
+    label[for="level_flexibleexpanded9642"],
+    label[for="level_flexibleexpanded9644"],
+    label[for="level_flexibleexpanded9641"] {
+        margin: 0 auto !important;
+    }
+
+    label[for="level_flexibleexpanded9482"],
+    label[for="level_flexibleexpanded9467"],
+    label[for="level_flexibleexpanded9463"] {
+        font-size: 18px !important;
+    }
+
+    label[for="level_flexibleexpanded9464"],
+    label[for="level_flexibleexpanded9465"],
+    label[for="level_flexibleexpanded9466"],
+    label[for="level_flexibleexpanded9466"],
+    label[for="level_flexibleexpanded9461"],
+    label[for="level_flexibleexpanded9462"],
+    label[for="level_flexibleexpanded9521"],
+    label[for="level_flexibleexpanded9522"],
+    label[for="level_flexibleexpanded9522"],
+    label[for="level_flexibleexpanded9468"],
+    label[for="level_flexibleexpanded9523"],
+    label[for="level_flexibleexpanded9642"],
+    label[for="level_flexibleexpanded9644"],
+    label[for="level_flexibleexpanded9641"] {
+        font-size: 15px !important;
+    }
+
+    input[type="radio"] {
+        /* -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        -o-appearance: none !important;
+        -ms-appearance: none !important;
+        appearance: none !important; */
+        width: 15px;
+        height: 15px;
+    }
+
+    div.responsive input {
+        font-family: inherit;
+        font-size: inherit;
+        vertical-align: top;
+    }
+
+    .donation-levels {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .donation-levels .donation-level-input-container.form-input {
+        height: 3em;
+        width: 12.12em;
+        font-family: 'Gotham', sans-serif;
+        font-size: 24px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* border: 2px solid #9b8051; */
+        margin: auto !important;
+        position: relative;
+        text-align: center;
+    }
+
+    .donation-level-amount-container {
+        font-size: 22px;
+        margin-bottom: -5px;
+    }
+
+    .donation-level-label-container,
+    .donation-level-amount-container {
+        font-weight: bold;
+    }
+
+    .donation-level-container:nth-child(n+4) {
+        /* display: none; */
+    }
+
+    .radio-button-container label {
+        height: 3em;
+        width: 9em;
+        font-family: 'Gotham', sans-serif;
+        font-size: 24px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #9b8051;
+        /* background-color: #e1e1e1; */
+        margin: auto !important;
+        position: relative;
+        text-align: center;
+    }
+
+    label[for="additional_cardholders_number_radio_0"],
+    label[for="additional_cardholders_number_radio_1"],
+    label[for="additional_cardholders_number_radio_2"],
+    label[for="additional_cardholders_number_radio_3"],
+    label[for="additional_cardholders_number_radio_4"] {
+        width: 5.95em !important;
+        margin: 0 17px !important;
+    }
+
+    input#spouseCardholder {
+        margin-top: 10px;
+    }
+
+    label[for="spouseCardholder"] {
+        margin-left: 5px !important;
+        font-size: 22px;
+        font-weight: bold !important;
+        text-align: start;
+    }
+
+    select#secondary_relationship_2_dropdown,
+    input#secondary_email_2_input,
+    select#secondary_relationship_3_dropdown,
+    input#secondary_email_3_input,
+    select#secondary_relationship_4_dropdown,
+    input#secondary_email_4_input,
+    select#secondary_relationship_5_dropdown,
+    input#secondary_email_5_input {
+        width: 62em;
+        max-width: 100%;
+    }
+
+    input#secondary_last_name_2_input,
+    input#secondary_last_name_3_input,
+    input#secondary_last_name_4_input,
+    input#secondary_last_name_5_input,
+    label[for="secondary_last_name_2_input"],
+    label[for="secondary_last_name_3_input"],
+    label[for="secondary_last_name_4_input"],
+    label[for="secondary_last_name_5_input"] {
+        margin-left: 39px;
+    }
+
+    input#secondary_last_name_2_input,
+    input#secondary_first_name_2_input,
+    input#secondary_first_name_3_input,
+    input#secondary_last_name_3_input,
+    input#secondary_first_name_4_input,
+    input#secondary_last_name_4_input,
+    input#secondary_first_name_5_input,
+    input#secondary_last_name_5_input {
+        max-width: 100%;
+        width: 29em;
+    }
+
+    .designated-giving-recurring-row label {
+        background-color: #e1e1e1;
+        border: none !important;
+    }
+
+    .donation-level-input-container.form-input {
+        height: 3em;
+        width: 9em;
+        font-family: 'Gotham', sans-serif;
+        font-size: 24px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* border: 2px solid #9b8051; */
+        background-color: #e1e1e1;
+        margin: auto !important;
+        position: relative;
+        text-align: center;
+    }
+
+    div.donation-level-amount-container+div.donation-level-label-container {
+        margin-left: 0 !important;
+    }
+
+    input[type="radio"]:checked+div.form-input-label-block label,
+    input[type="radio"]:hover,
+    .radio-button-container label:hover,
+    .radio-button-container label:checked,
+    input[type="radio"]:checked+.donation-level-input-container.form-input,
+    .donation-level-input-container.form-input:hover,
+    /* .donation-level-input-container.form-input:checked, */
+    input[type="radio"]:checked+label,
+    input[type="radio"]:checked+.donation-level-container-0.checked {
+        color: white;
+        background-color: #063471;
+        border-style: none;
+    }
+
+    /* div#level_flexibleduration_row {
+        display: none;
+    } */
+
+    select#spouseData4 {
+        max-width: 100%;
+        width: 62em;
+    }
+
+    div#donor_first_name_row,
+    div#donor_middle_name_row,
+    div#donor_last_name_row {
+        display: inline-flex;
+    }
+
+    div#donor_middle_name_row,
+    div#donor_last_name_row {
+        margin-left: 37px !important;
+    }
+
+    div#billing_first_name_row,
+    div#billing_middle_name_row,
+    div#billing_last_name_row {
+        display: inline-flex;
+    }
+
+    div#billing_middle_name_row,
+    div#billing_last_name_row {
+        margin-left: 37px !important;
+    }
+
+    input#donor_first_namename,
+    input#donor_middle_namename,
+    input#donor_last_namename {
+        width: 18em !important;
+        margin: 0px 0px 0 15px !important;
+        max-width: 100% !important;
+    }
+
+    input#billing_first_namename,
+    input#billing_middle_namename,
+    input#billing_last_namename {
+        width: 19.7em !important;
+        margin: 0px 0px 0 15px !important;
+        max-width: 100% !important;
+    }
+
+
+    div#donor_addr_city_row,
+    div#donor_addr_state_row,
+    div#donor_addr_zip_row {
+        display: inline-flex;
+    }
+
+    div#donor_addr_state_row,
+    div#donor_addr_zip_row {
+        margin-left: 37px !important;
+    }
+
+    input#donor_addr_cityname,
+    select#donor_addr_state,
+    input#donor_addr_zipname {
+        width: 18em !important;
+        margin: 0px 0px 0 15px !important;
+        max-width: 100% !important;
+        background-position-x: 95% !important;
+    }
+
+    label[for="donor_addr_state"] {
+        vertical-align: unset;
+    }
+
+    label[for="military_status_dropdown"],
+    #level_flexible_row .FormLabelText,
+    div.responsive legend,
+    label[for="military_branch_dropdown"],
+    label[for="discharge_status_dropdown"] {
+        font-weight: bold !important;
+    }
+
+    label[for="military_status_dropdown"] {
+        font-weight: bold !important;
+    }
+
+    #level_flexible_row .FormLabelText {
+        margin-left: 17px !important;
+    }
+
+    div#donor_phone_row,
+    .custom-field-container.form-row {
+        display: inline-flex;
+    }
+
+    input#donor_phonename {
+        width: 26.4em !important;
+        margin: 0px 0px 0 15px !important;
+        max-width: 100% !important;
+    }
+
+    select#birtdate_date_MONTH,
+    select#birtdate_date_DAY,
+    select#birtdate_date_YEAR {
+        width: 9.2em !important;
+        margin: 0px 0px 0 15px !important;
+        max-width: 100% !important;
+        background-position-x: 95% !important;
+    }
+
+    div#donor_phone_row {
+        vertical-align: bottom;
+    }
+
+
+    div#billing_addr_city_row,
+    div#billing_addr_state_row,
+    div#billing_addr_zip_row {
+        display: inline-flex;
+    }
+
+    div#billing_addr_state_row,
+    div#billing_addr_zip_row {
+        margin-left: 37px !important;
+    }
+
+    input#billing_addr_cityname,
+    select#billing_addr_state,
+    input#billing_addr_zipname {
+        width: 18em !important;
+        margin: 0px 0px 0 15px !important;
+        max-width: 100% !important;
+        background-position-x: 95% !important;
+    }
+
+    label[for="billing_addr_state"] {
+        vertical-align: unset;
+    }
+
+
+    input#spouse_first_name_input,
+    input#spouse_last_name_input {
+        width: 29.7em;
+    }
+
+    select#level_flexibleduration,
+    input#additional_amountname,
+    input#donor_addr_street1name,
+    input#donor_addr_street2name,
+    select#donor_addr_country,
+    input#donor_email_addressname,
+    select#billing_title,
+    select#billing_suffix,
+    input#billing_addr_street1name,
+    input#billing_addr_street2name,
+    select#billing_addr_country,
+    input#spouse_email_input,
+    select#spouse_relationship_dropdown,
+    input#referral_other_input,
+    input#highest_rank_input,
+    input#last_command_before_eas_input,
+    select#referral_dropdown,
+    select#time_of_service_dropdown {
+        width: 62em !important;
+        max-width: 100% !important;
+    }
+
+    label[for="billing_middle_namename"] {
+        margin-left: 13px !important;
+    }
+
+    /* PAGE 2 */
+    .radio-button-container label[for=military_branch_radio_Marines],
+    .radio-button-container label[for=military_branch_radio_Coast\ Guard],
+    .radio-button-container label[for=military_branch_radio_Air\ Force],
+    .radio-button-container label[for=military_branch_radio_Army],
+    .radio-button-container label[for=military_branch_radio_Navy],
+    .radio-button-container label[for=military_branch_radio_Space\ Force] {
+        height: 3em;
+        width: 9em !important;
+        color: #063471;
+        font-weight: bold;
+        border: 2px solid #063471 !important;
+        background-color: transparent;
+    }
+
+    .radio-button-container label[for=military_branch_radio_Marines]:hover,
+    .radio-button-container label[for=military_branch_radio_Coast\ Guard]:hover,
+    .radio-button-container label[for=military_branch_radio_Air\ Force]:hover,
+    .radio-button-container label[for=military_branch_radio_Army]:hover,
+    .radio-button-container label[for=military_branch_radio_Navy]:hover,
+    .radio-button-container label[for=military_branch_radio_Space\ Force]:hover {
+        color: white;
+        background-color: #063471;
+    }
+
+    h3.headerFooterD {
+        display: block;
+    }
+
+    h3.headerFooterM {
+        display: none;
+    }
+
+
+    @media only screen and (min-width: 768px) {
+        .col-sm-2 {
+            width: 16.66666667%;
+            float: left;
+        }
+
+        .col-sm-10 {
+            width: 83.33333333%;
+        }
+
+    }
+
+    footer .top .right .footer-form-wrapper p {
+        margin: 0 !important;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .appArea {
+            width: auto;
+        }
+
+        .main-wrapper {
+            padding: 0px 0px;
+        }
+    }
+
+    @media (max-width:991px) {
+        .radio-button-container label {
+            width: 7.3em !important;
+        }
+
+        .donation-levels .donation-level-input-container.form-input {
+            width: 9.685em;
+        }
+
+        .designated-giving-recurring-row label {
+            width: 14.3em !important;
+        }
+
+        select#level_flexibleduration,
+        input#additional_amountname,
+        input#donor_addr_street1name,
+        input#donor_addr_street2name,
+        select#donor_addr_country,
+        input#donor_email_addressname,
+        select#billing_title,
+        select#billing_suffix,
+        input#billing_addr_street1name,
+        input#billing_addr_street2name,
+        select#billing_addr_country,
+        input#spouse_email_input,
+        select#spouse_relationship_dropdown,
+        input#referral_other_input,
+        input#highest_rank_input,
+        input#last_command_before_eas_input,
+        select#referral_dropdown,
+        select#time_of_service_dropdown {
+            width: 62em !important;
+            max-width: 76% !important;
+        }
+
+        input#donor_first_namename,
+        input#donor_middle_namename,
+        input#donor_last_namename,
+        input#donor_addr_cityname,
+        select#donor_addr_state,
+        input#donor_addr_zipname,
+        input#billing_first_namename,
+        input#billing_middle_namename,
+        input#billing_last_namename,
+        input#billing_addr_cityname,
+        select#billing_addr_state,
+        input#billing_addr_zipname {
+            width: 13.6em !important;
+        }
+
+        input#donor_phonename {
+            width: 22.4em !important;
+        }
+
+        select#birtdate_date_MONTH,
+        select#birtdate_date_DAY,
+        select#birtdate_date_YEAR {
+            width: 6.75em !important;
+        }
+
+        div.payment-field-container #responsive_payment_typecc_number_row input {
+            width: 45em;
+        }
+
+        label[for="additional_cardholders_number_radio_0"],
+        label[for="additional_cardholders_number_radio_1"],
+        label[for="additional_cardholders_number_radio_2"],
+        label[for="additional_cardholders_number_radio_3"],
+        label[for="additional_cardholders_number_radio_4"] {
+            width: 4.3em !important;
+        }
+
+        /* PAGE 2 */
+        .sealContainer {
+            max-width: 62%;
+            column-gap: 265px;
+            margin-left: 45px !important;
+        }
+
+        .radio-button-container label[for=military_branch_radio_Marines],
+        .radio-button-container label[for=military_branch_radio_Coast\ Guard],
+        .radio-button-container label[for=military_branch_radio_Air\ Force],
+        .radio-button-container label[for=military_branch_radio_Army],
+        .radio-button-container label[for=military_branch_radio_Navy],
+        .radio-button-container label[for=military_branch_radio_Space\ Force] {
+            width: 11.2em !important;
+        }
+
+        div#serviceC fieldset .radio-button-container label {
+            width: 16em !important;
+            height: 4em !important;
+            font-size: 18px !important;
+        }
+
+        div#startDate,
+        div#endDate {
+            width: 24em !important;
+        }
+
+        select#service_start_date_date_MONTH,
+        select#service_start_date_date_DAY,
+        select#service_start_date_date_YEAR,
+        select#service_end_date_date_MONTH,
+        select#service_end_date_date_DAY,
+        select#service_end_date_date_YEAR {
+            width: 5.8em !important;
+        }
+    }
+
+    @media (max-width:900px) {
+
+        /* input[type="radio"] {
+            display: none !important;
+        } */
+
+        .radio-button-container label {
+            width: 7.2em
+        }
+
+        .donation-levels .donation-level-input-container.form-input {
+            width: 9.65em;
+        }
+
+        .designated-giving-recurring-row label {
+            width: 14.3em !important;
+        }
+
+        select#level_flexibleduration,
+        input#additional_amountname,
+        input#donor_addr_street1name,
+        input#donor_addr_street2name,
+        select#donor_addr_country,
+        input#donor_email_addressname,
+        select#billing_title,
+        select#billing_suffix,
+        input#billing_addr_street1name,
+        input#billing_addr_street2name,
+        select#billing_addr_country,
+        input#spouse_email_input,
+        select#spouse_relationship_dropdown,
+        input#referral_other_input,
+        input#highest_rank_input,
+        input#last_command_before_eas_input,
+        select#referral_dropdown,
+        select#time_of_service_dropdown {
+            width: 62em !important;
+            max-width: 76% !important;
+        }
+
+        input#donor_first_namename,
+        input#donor_middle_namename,
+        input#donor_last_namename,
+        input#donor_addr_cityname,
+        select#donor_addr_state,
+        input#donor_addr_zipname,
+        input#billing_first_namename,
+        input#billing_middle_namename,
+        input#billing_last_namename,
+        input#billing_addr_cityname,
+        select#billing_addr_state,
+        input#billing_addr_zipname {
+            width: 13.5em !important;
+        }
+
+        input#donor_phonename {
+            width: 22.4em !important;
+        }
+
+        select#birtdate_date_MONTH,
+        select#birtdate_date_DAY,
+        select#birtdate_date_YEAR {
+            width: 6.65em !important;
+        }
+
+
+        div.payment-field-container #responsive_payment_typecc_number_row input {
+            width: 46em;
+        }
+
+        /* label[for="additional_cardholders_number_radio_0"],
+        label[for="additional_cardholders_number_radio_1"],
+        label[for="additional_cardholders_number_radio_2"],
+        label[for="additional_cardholders_number_radio_3"],
+        label[for="additional_cardholders_number_radio_4"]{
+            width: 4.3em!important;
+        } */
+
+        /* PAGE 2 */
+        .sealContainer {
+            max-width: 68%;
+        }
+
+        .radio-button-container label[for=military_branch_radio_Marines],
+        .radio-button-container label[for=military_branch_radio_Coast\ Guard],
+        .radio-button-container label[for=military_branch_radio_Air\ Force],
+        .radio-button-container label[for=military_branch_radio_Army],
+        .radio-button-container label[for=military_branch_radio_Navy],
+        .radio-button-container label[for=military_branch_radio_Space\ Force] {
+            width: 11.4em !important;
+        }
+
+        div#serviceC fieldset .radio-button-container label {
+            width: 16.3em !important;
+        }
+
+
+    }
+
+    @media (max-width: 768px) {
+
+
+
+        div.form-input-label-block label[for="birtdate_date_MONTH"] {
+            margin-left: 60px;
+        }
+
+        div.donation-form-container.responsive {
+            margin: 30px auto;
+        }
+
+        .radio-button-container label,
+        .donation-level-input-container.form-input {
+            width: 7.2em;
+        }
+
+        .designated-giving-recurring-row label {
+            width: 14.3em !important;
+        }
+
+        .donation-levels .donation-level-input-container.form-input {
+            width: 9.6em !important;
+        }
+
+        select#level_flexibleduration,
+        input#additional_amountname,
+        input#donor_addr_street1name,
+        input#donor_addr_street2name,
+        select#donor_addr_country,
+        input#donor_email_addressname,
+        select#billing_title,
+        select#billing_suffix,
+        input#billing_addr_street1name,
+        input#billing_addr_street2name,
+        select#billing_addr_country,
+        input#spouse_email_input,
+        select#spouse_relationship_dropdown,
+        input#referral_other_input,
+        input#highest_rank_input,
+        input#last_command_before_eas_input,
+        select#referral_dropdown,
+        select#time_of_service_dropdown {
+            max-width: 76% !important;
+        }
+
+        div.payment-field-container #responsive_payment_typecc_number_row input {
+            max-width: 95% !important;
+        }
+
+        div#donor_first_name_row,
+        div#donor_middle_name_row,
+        div#donor_last_name_row {
+            display: inline-flex;
+            max-width: 25% !important;
+        }
+
+        input#donor_first_namename,
+        input#donor_middle_namename,
+        input#donor_last_namename {
+            max-width: 100% !important;
+            width: 15.36em !important;
+        }
+
+        div#donor_middle_name_row,
+        div#donor_last_name_row {
+            margin-left: 51px !important;
+        }
+
+        div#donor_addr_city_row,
+        div#donor_addr_state_row,
+        div#donor_addr_zip_row {
+            display: inline-flex;
+            max-width: 25% !important;
+        }
+
+        input#donor_addr_cityname,
+        select#donor_addr_state,
+        input#donor_addr_zipname {
+            max-width: 90% !important;
+        }
+
+        div#donor_addr_state_row,
+        div#donor_addr_zip_row {
+            margin-left: 66px !important;
+        }
+
+        input#donor_phonename {
+            width: 20em !important;
+        }
+
+        select#birtdate_date_MONTH,
+        select#birtdate_date_DAY,
+        select#birtdate_date_YEAR {
+            width: 6.2em !important;
+            margin: 0px 0px 0 26px !important;
+        }
+
+        div#billing_first_name_row,
+        div#billing_middle_name_row,
+        div#billing_last_name_row {
+            display: inline-flex;
+            max-width: 25% !important;
+        }
+
+        input#billing_first_namename,
+        input#billing_middle_namename,
+        input#billing_last_namename {
+            max-width: 100% !important;
+            width: 15.36em !important;
+        }
+
+        div#billing_middle_name_row,
+        div#billing_last_name_row {
+            margin-left: 66px !important;
+        }
+
+        div#billing_addr_city_row,
+        div#billing_addr_state_row,
+        div#billing_addr_zip_row {
+            display: inline-flex;
+            max-width: 25% !important;
+        }
+
+        input#billing_addr_cityname,
+        select#billing_addr_state,
+        input#billing_addr_zipname {
+            max-width: 90% !important;
+        }
+
+        div#billing_addr_state_row,
+        div#billing_addr_zip_row {
+            margin-left: 66px !important;
+        }
+
+        input#spouse_first_name_input,
+        input#spouse_last_name_input {
+            width: 23.1em;
+        }
+
+        select#secondary_relationship_2_dropdown,
+        input#secondary_email_2_input,
+        input#secondary_first_name_2_input,
+        input#secondary_last_name_2_input,
+        select#secondary_relationship_3_dropdown,
+        input#secondary_email_3_input,
+        input#secondary_first_name_3_input,
+        input#secondary_last_name_3_input,
+        select#secondary_relationship_4_dropdown,
+        input#secondary_email_4_input,
+        input#secondary_first_name_4_input,
+        input#secondary_last_name_4_input,
+        select#secondary_relationship_5_dropdown,
+        input#secondary_email_5_input,
+        input#secondary_first_name_2_input,
+        input#secondary_last_name_5_input {
+            max-width: 76% !important;
+        }
+
+        input#secondary_last_name_2_input,
+        input#secondary_first_name_2_input,
+        input#secondary_first_name_3_input,
+        input#secondary_last_name_3_input,
+        input#secondary_first_name_4_input,
+        input#secondary_last_name_4_input,
+        input#secondary_first_name_5_input,
+        input#secondary_last_name_5_input {
+            max-width: 100% !important;
+            width: 22.42em;
+        }
+
+        select#spouseData4 {
+            max-width: 76%;
+        }
+
+        /* PAGE 2 */
+        .sealContainer {
+            max-width: 80%;
+        }
+
+        .radio-button-container label[for=military_branch_radio_Marines],
+        .radio-button-container label[for=military_branch_radio_Coast\ Guard],
+        .radio-button-container label[for=military_branch_radio_Air\ Force],
+        .radio-button-container label[for=military_branch_radio_Army],
+        .radio-button-container label[for=military_branch_radio_Navy],
+        .radio-button-container label[for=military_branch_radio_Space\ Force] {
+            width: 11.5em !important;
+        }
+
+        div#serviceC fieldset .radio-button-container label {
+            width: 16.4em !important;
+        }
+
+    }
+
+    @media (max-width: 430px) {
+
+        /* div#additional_amount_row {
+        transform: translate(0px, -390px);
+        display: revert;
+        position: absolute;
+        } */
+        /* div#level_flexible_row {
+            margin-bottom: 50px!important;
+        } */
+
+        .donation-levels {
+            flex-direction: column;
+        }
+
+        #membership-annually-img {
+            display: none !important;
+        }
+
+        #membership-annually-img-mobile {
+            height: 69px !important;
+            margin-top: 10px;
+            padding: 0;
+            background-image: url(../images/content/pagebuilder/membershiactive-mobile.png);
+            background-position: top;
+            background-repeat: no-repeat;
+            background-size: auto 67px;
+            display: block;
+        }
+
+        div#lifetime-img {
+            display: none !important;
+        }
+
+        div#lifetime-img-mobile {
+            height: 69px !important;
+            margin-top: 10px;
+            padding: 0;
+            background-image: url(../images/content/pagebuilder/lifetime-mobile.png);
+            background-position: top;
+            background-repeat: no-repeat;
+            background-size: auto 67px;
+            display: block;
+        }
+
+        div.donation-form-container.responsive {
+            border-radius: 0 !important;
+        }
+
+        .mobile div.responsive {
+            width: 100%;
+        }
+
+        .form-progress-bar {
+            margin: 25px 0 8px 50px;
+        }
+
+        .mobile div.progress-bar-step-text-container {
+            display: inherit;
+            font-size: 15px;
+            margin-right: 30px;
+        }
+
+        .mHeader {
+            font-size: 35px;
+            margin: 25px 0.5em;
+        }
+
+        .mainT {
+            margin: 0px 1.2em !important;
+            font-size: 13pt !important;
+        }
+
+        .bnftList {
+            padding: 15px 0.5em;
+        }
+
+        .bnftList ul li {
+            font-size: 14pt;
+        }
+
+        .mStatus {
+            margin: 25px 0.8em 0px 0.8em;
+        }
+
+        fieldset.frequency {
+            flex-direction: row-reverse !important;
+            gap: 20px !important
+        }
+
+        div#level_flexible_row div#level_flexiblegift_type_Row div.form-content fieldset {
+            display: flex;
+            margin: 0 5px;
+            flex-direction: row-reverse !important;
+
+        }
+
+        div#level_flexiblegift_type_Row div.form-content fieldset legend {
+            display: block !important;
+        }
+
+        fieldset,
+        legend {
+            flex-wrap: wrap;
+        }
+
+        .radio-button-container label,
+        .donation-level-input-container.form-input {
+            width: 17em !important;
+        }
+
+        .mobile div.form-input-label-block {
+            max-width: 100% !important;
+        }
+
+        .designated-giving-recurring-row label {
+            width: 17.3em !important;
+        }
+
+        .donation-levels .donation-level-input-container.form-input {
+            width: 17.3em !important;
+        }
+
+        .mobile div.donation-level-label-container {
+            max-width: 100%;
+        }
+
+        label[for="spouseCardholder"] {
+            margin-left: 5px !important;
+            margin-top: 1px;
+            font-size: 21px !important;
+        }
+
+        select#level_flexibleduration,
+        input#additional_amountname,
+        input#donor_addr_street1name,
+        input#donor_addr_street2name,
+        select#donor_addr_country,
+        input#donor_email_addressname,
+        select#billing_title,
+        select#billing_suffix,
+        input#billing_addr_street1name,
+        input#billing_addr_street2name,
+        select#billing_addr_country,
+        input#spouse_email_input,
+        select#spouse_relationship_dropdown,
+        input#referral_other_input,
+        input#highest_rank_input,
+        input#last_command_before_eas_input,
+        select#referral_dropdown,
+        select#time_of_service_dropdown {
+            max-width: 44% !important;
+        }
+
+        input#secondary_last_name_2_input,
+        input#secondary_first_name_2_input,
+        input#secondary_first_name_3_input,
+        input#secondary_last_name_3_input,
+        input#secondary_first_name_4_input,
+        input#secondary_last_name_4_input,
+        input#secondary_first_name_5_input,
+        input#secondary_last_name_5_input {
+            width: 62em !important;
+            max-width: 44% !important
+        }
+
+
+        div#donor_first_name_row,
+        div#donor_middle_name_row,
+        div#donor_last_name_row {
+            display: contents !important;
+            max-width: 100% !important;
+        }
+
+        div#donor_addr_city_row {
+            display: contents;
+            max-width: 100% !important;
+        }
+
+        input#donor_addr_cityname {
+            width: 39em !important;
+        }
+
+        div#donor_addr_state_row,
+        div#donor_addr_zip_row {
+            margin-left: 2px !important;
+            max-width: 47% !important;
+        }
+
+        input#donor_phonename {
+            width: 28.3em !important;
+        }
+
+        .mobile div.responsive div.form-row {
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+        }
+
+        select#birtdate_date_MONTH,
+        select#birtdate_date_DAY,
+        select#birtdate_date_YEAR {
+            width: 8.7em !important;
+        }
+
+        select#birtdate_date_DAY,
+        select#birtdate_date_YEAR {
+            margin: 0px 0px 0 15px !important;
+        }
+
+        select#birtdate_date_MONTH {
+            margin-left: -20px !important;
+        }
+
+        div.form-input-label-block label[for="birtdate_date_MONTH"] {
+            margin-left: 15px;
+        }
+
+        .mobile div.responsive div.form-checkbox label,
+        label.custom-element-checkbox-label {
+            max-width: 85% !important;
+        }
+
+        div#billing_first_name_row,
+        div#billing_middle_name_row,
+        div#billing_last_name_row {
+            display: contents;
+            max-width: 100% !important;
+        }
+
+        input#billing_first_namename,
+        input#billing_middle_namename,
+        input#billing_last_namename,
+        input#donor_first_namename,
+        input#donor_middle_namename,
+        input#donor_last_namename {
+            width: 28.3em !important;
+        }
+
+        div#billing_addr_city_row {
+            display: contents;
+            max-width: 100% !important;
+        }
+
+        input#billing_addr_cityname,
+        input#donor_addr_cityname {
+            width: 30.3em !important;
+        }
+
+        div#billing_addr_state_row,
+        div#billing_addr_zip_row {
+            margin-left: 2px !important;
+            max-width: 47% !important;
+        }
+
+        input#spouse_first_name_input,
+        input#spouse_last_name_input {
+            width: 28.3em;
+        }
+
+        div#responsive_payment_typecc_type_row {
+            margin-left: -5px;
+            zoom: 1.5;
+        }
+
+        label[for="responsive_payment_typecc_numbername"] {
+            margin-left: 0px !important;
+        }
+
+        div.payment-field-container #responsive_payment_typecc_number_row input {
+            max-width: 57% !important;
+            margin-left: 0px;
+        }
+
+        div#responsive_payment_typecc_exp_date_row {
+            margin-left: -14px;
+        }
+
+        div#responsive_payment_typecc_cvv_row {
+            margin-left: -5px;
+        }
+
+        a.HelpLink {
+            width: 100%;
+            transform: translate(-52px, 92px);
+            font-size: 18px;
+        }
+
+        .mobile div.button-sub-container {
+            width: 100% !important;
+            margin-top: 10px;
+        }
+
+        select#responsive_payment_typecc_exp_date_MONTH,
+        select#responsive_payment_typecc_exp_date_YEAR,
+        div.payment-field-container #responsive_payment_typecc_cvv_row input {
+            width: 8.4em;
+            margin-left: 9px;
+            margin-right: 0px;
+            background-position-x: 56% !important;
+        }
+
+        select#secondary_relationship_2_dropdown,
+        input#secondary_email_2_input,
+        input#secondary_first_name_2_input,
+        input#secondary_last_name_2_input,
+        select#secondary_relationship_3_dropdown,
+        input#secondary_email_3_input,
+        input#secondary_first_name_3_input,
+        input#secondary_last_name_3_input,
+        select#secondary_relationship_4_dropdown,
+        input#secondary_email_4_input,
+        input#secondary_first_name_4_input,
+        input#secondary_last_name_4_input,
+        select#secondary_relationship_5_dropdown,
+        input#secondary_email_5_input {
+            max-width: 44% !important;
+        }
+
+        label[for="additional_cardholders_number_radio_0"],
+        label[for="additional_cardholders_number_radio_1"],
+        label[for="additional_cardholders_number_radio_2"],
+        label[for="additional_cardholders_number_radio_3"],
+        label[for="additional_cardholders_number_radio_4"] {
+            margin: 0px !important;
+            width: 3.25em !important;
+        }
+
+        input#secondary_last_name_2_input,
+        input#secondary_last_name_3_input,
+        input#secondary_last_name_4_input,
+        input#secondary_last_name_5_input,
+        label[for="secondary_last_name_2_input"],
+        label[for="secondary_last_name_3_input"],
+        label[for="secondary_last_name_4_input"],
+        label[for="secondary_last_name_5_input"] {
+            margin-left: 15px;
+        }
+
+        select#spouseData4 {
+            max-width: 44%;
+        }
+
+        label[for="additional_cardholders_number_radio_1"],
+        label[for="additional_cardholders_number_radio_2"],
+        label[for="additional_cardholders_number_radio_3"],
+        label[for="additional_cardholders_number_radio_4"] {
+            margin-left: 5px !important;
+        }
+
+        /* PAGE 2 */
+
+        h3.headerFooterM {
+            display: block;
+        }
+
+        h3.headerFooterD {
+            display: none;
+        }
+
+        .sealContainer {
+            max-width: 66%;
+            column-gap: 161px;
+            row-gap: 81px;
+            margin-left: 70px !important;
+            transform: translateY(70px) !important;
+        }
+
+        .radio-button-container label[for=military_branch_radio_Marines],
+        .radio-button-container label[for=military_branch_radio_Coast\ Guard],
+        .radio-button-container label[for=military_branch_radio_Air\ Force],
+        .radio-button-container label[for=military_branch_radio_Army],
+        .radio-button-container label[for=military_branch_radio_Navy],
+        .radio-button-container label[for=military_branch_radio_Space\ Force] {
+            width: 10.5em !important;
+            padding: 0 10px;
+            font-size: 15px !important;
+        }
+
+        img.seals {
+            width: 55px !important;
+        }
+
+        div#serviceC fieldset .radio-button-container label {
+            width: 17.4em !important;
+            font-size: 22px !important;
+        }
+
+        div#startDate,
+        div#endDate {
+            width: 34em !important;
+        }
+
+        select#service_start_date_date_MONTH,
+        select#service_start_date_date_DAY,
+        select#service_start_date_date_YEAR,
+        select#service_end_date_date_MONTH,
+        select#service_end_date_date_DAY,
+        select#service_end_date_date_YEAR {
+            width: 7.8em !important;
+        }
+
+        label[for=service_start_date_date_MONTH],
+        label[for=service_end_date_date_MONTH],
+        label[for=time_of_service_dropdown],
+        label[for=donor_email_opt_inname],
+        label[for=referral_other_input] {
+            font-size: 13pt !important;
+            max-width: 80% !important;
+        }
+
+        label[for=last_command_before_eas_input],
+        label[for=referral_dropdown] {
+            max-width: 45% !important;
+        }
+
+        /* FOOTER */
+
+        .transaction-summary-info {
+            display: block !important;
+        }
+
+        footer .container .row {
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .menu-footer-menu-container {
+            display: none !important;
+        }
+
+        .col-lg-4.col-sm-12.right {
+            display: none;
+        }
+
+        footer .top {
+            /* border-bottom: none; */
+        }
+
+        .col-lg-1.col-sm-2.col-xs-4 a img {
+            margin-left: 90px;
+        }
+
+        .col-lg-6.col-sm-12.left h3 {
+            margin-top: 30px !important;
+            font-weight: normal;
+            font-size: 26pt;
+        }
+
+        footer .top .left p,
+        .col-lg-5.left p {
+            font-size: 15pt !important;
+            font-weight: normal !important;
+            line-height: 28px !important;
+        }
+
+        .col-lg-5.left {
+            margin-bottom: 60px !important;
+        }
+
+        .row.bottom {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+
+        .marine-logo-wrapper {
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .social-media-wrapper {
+            display: none !important;
+        }
+
+    }
+
+    @media (max-width:415px) {
+
+        .radio-button-container label,
+        .donation-level-input-container.form-input,
+        .donation-levels .donation-level-input-container.form-input,
+        .designated-giving-recurring-row label {
+            width: 16.6em !important;
+        }
+
+        .donation-levels .donation-level-input-container.form-input,
+        .designated-giving-recurring-row label {
+            margin-left: 4px !important;
+        }
+
+        select#birtdate_date_MONTH,
+        select#birtdate_date_DAY,
+        select#birtdate_date_YEAR {
+            width: 8.65em !important;
+        }
+
+        input#donor_addr_cityname,
+        select#donor_addr_state,
+        input#donor_addr_zipname,
+        select#billing_addr_state,
+        input#billing_addr_zipname {
+            max-width: 87% !important;
+        }
+
+        label[for="spouseCardholder"] {
+            font-size: 20px !important;
+        }
+
+        input#billing_first_namename,
+        input#billing_middle_namename,
+        input#billing_last_namename,
+        input#donor_first_namename,
+        input#donor_middle_namename,
+        input#donor_last_namename,
+        input#donor_phonename {
+            width: 27.5em !important;
+        }
+
+        input#billing_addr_cityname {
+            width: 29.7em !important;
+        }
+
+        select#secondary_relationship_2_dropdown,
+        input#secondary_email_2_input,
+        input#secondary_first_name_2_input,
+        input#secondary_last_name_2_input,
+        select#secondary_relationship_3_dropdown,
+        input#secondary_email_3_input,
+        input#secondary_first_name_3_input,
+        input#secondary_last_name_3_input,
+        select#secondary_relationship_4_dropdown,
+        input#secondary_email_4_input,
+        input#secondary_first_name_4_input,
+        input#secondary_last_name_4_input,
+        select#secondary_relationship_5_dropdown,
+        input#secondary_email_5_input {
+            max-width: 42.2% !important;
+        }
+
+        input#secondary_last_name_2_input,
+        input#secondary_first_name_2_input,
+        input#secondary_first_name_3_input,
+        input#secondary_last_name_3_input,
+        input#secondary_first_name_4_input,
+        input#secondary_last_name_4_input,
+        input#secondary_first_name_5_input,
+        input#secondary_last_name_5_input {
+            width: 62em !important;
+            max-width: 42% !important;
+        }
+
+        input#spouse_first_name_input,
+        input#spouse_last_name_input {
+            width: 27.5em;
+        }
+
+        select#responsive_payment_typecc_exp_date_MONTH,
+        select#responsive_payment_typecc_exp_date_YEAR,
+        div.payment-field-container #responsive_payment_typecc_cvv_row input {
+            width: 8.2em
+        }
+
+        div.payment-field-container #responsive_payment_typecc_number_row input {
+            max-width: 56% !important;
+        }
+
+        label[for="additional_cardholders_number_radio_0"],
+        label[for="additional_cardholders_number_radio_1"],
+        label[for="additional_cardholders_number_radio_2"],
+        label[for="additional_cardholders_number_radio_3"],
+        label[for="additional_cardholders_number_radio_4"] {
+            width: 3.2em !important;
+        }
+
+        /* PAGE 2 */
+
+        div#serviceC fieldset .radio-button-container label {
+            width: 17em !important;
+            font-size: 22px !important;
+        }
+
+        select#service_start_date_date_MONTH,
+        select#service_start_date_date_DAY,
+        select#service_start_date_date_YEAR,
+        select#service_end_date_date_MONTH,
+        select#service_end_date_date_DAY,
+        select#service_end_date_date_YEAR {
+            width: 7.5em !important;
+        }
+
+        label[for=service_start_date_date_MONTH],
+        label[for=service_end_date_date_MONTH] {
+            max-width: 100% !important;
+        }
+
+        label[for=time_of_service_dropdown],
+        label[for=referral_other_input] {
+            max-width: 70% !important;
+        }
+
+        label[for=last_command_before_eas_input],
+        label[for=referral_dropdown] {
+            max-width: 42% !important;
+        }
+
+        select#level_flexibleduration,
+        input#additional_amountname,
+        input#donor_addr_street1name,
+        input#donor_addr_street2name,
+        select#donor_addr_country,
+        input#donor_email_addressname,
+        select#billing_title,
+        select#billing_suffix,
+        input#billing_addr_street1name,
+        input#billing_addr_street2name,
+        select#billing_addr_country,
+        input#spouse_email_input,
+        select#spouse_relationship_dropdown,
+        input#referral_other_input,
+        input#highest_rank_input,
+        input#last_command_before_eas_input,
+        select#referral_dropdown,
+        select#time_of_service_dropdown {
+            max-width: 43% !important;
+        }
+
+        form .button-container button.finish-step {
+            font-size: 26px !important;
+        }
+
+
+    }
+
+    @media (max-width: 394px) {
+
+        label[for="military_status_radio_\ Active"],
+        label[for="military_status_radio_\ Reserves"],
+        label[for="military_status_radio_\ Former"],
+        label[for="military_status_radio_\ Retired"] {
+            width: 16em !important;
+        }
+
+        .mobile div.form-input-label-block {
+            max-width: 100% !important;
+        }
+
+        .donation-levels .donation-level-input-container.form-input {
+            width: 15.8em !important;
+        }
+
+        .designated-giving-recurring-row label {
+            width: 16em !important;
+        }
+
+        select#level_flexibleduration,
+        input#additional_amountname,
+        input#donor_addr_street1name,
+        input#donor_addr_street2name,
+        select#donor_addr_country,
+        input#donor_email_addressname,
+        select#billing_title,
+        select#billing_suffix,
+        input#billing_addr_street1name,
+        input#billing_addr_street2name,
+        select#billing_addr_country,
+        input#spouse_email_input,
+        select#spouse_relationship_dropdown,
+        input#referral_other_input,
+        input#highest_rank_input,
+        input#last_command_before_eas_input,
+        select#referral_dropdown,
+        select#time_of_service_dropdown {
+            max-width: 41% !important;
+        }
+
+        input#billing_first_namename,
+        input#billing_middle_namename,
+        input#billing_last_namename,
+        input#donor_first_namename,
+        input#donor_middle_namename,
+        input#donor_last_namename {
+            width: 26.3em !important;
+        }
+
+        input#donor_addr_cityname,
+        select#donor_addr_state,
+        input#donor_addr_zipname,
+        select#billing_addr_state,
+        input#billing_addr_zipname {
+            max-width: 83% !important;
+        }
+
+        input#donor_phonename {
+            width: 26.3em !important;
+        }
+
+        select#birtdate_date_MONTH,
+        select#birtdate_date_DAY,
+        select#birtdate_date_YEAR {
+            width: 8em !important;
+        }
+
+        input#billing_addr_cityname {
+            width: 28.3em !important;
+        }
+
+        input#spouse_first_name_input,
+        input#spouse_last_name_input {
+            width: 26.3em;
+        }
+
+        label[for="additional_cardholders_number_radio_0"],
+        label[for="additional_cardholders_number_radio_1"],
+        label[for="additional_cardholders_number_radio_2"],
+        label[for="additional_cardholders_number_radio_3"],
+        label[for="additional_cardholders_number_radio_4"] {
+            width: 3em !important;
+        }
+
+        select#secondary_relationship_2_dropdown,
+        input#secondary_email_2_input,
+        input#secondary_first_name_2_input,
+        input#secondary_last_name_2_input,
+        select#secondary_relationship_3_dropdown,
+        input#secondary_email_3_input,
+        input#secondary_first_name_3_input,
+        input#secondary_last_name_3_input,
+        select#secondary_relationship_4_dropdown,
+        input#secondary_email_4_input,
+        input#secondary_first_name_4_input,
+        input#secondary_last_name_4_input,
+        select#secondary_relationship_5_dropdown,
+        input#secondary_email_5_input,
+        input#secondary_first_name_5_input,
+        input#secondary_last_name_5_input {
+            max-width: 40% !important;
+        }
+
+        div.payment-field-container #responsive_payment_typecc_number_row input {
+            max-width: 52% !important;
+        }
+
+        select#responsive_payment_typecc_exp_date_MONTH,
+        select#responsive_payment_typecc_exp_date_YEAR,
+        div.payment-field-container #responsive_payment_typecc_cvv_row input {
+            width: 7.6em;
+        }
+
+        /* PAGE 2 */
+        h2.section-header-container {
+            font-size: 35px !important;
+        }
+
+        .sealContainer {
+            column-gap: 148px;
+            margin-left: 67px !important;
+        }
+
+        .radio-button-container label[for=military_branch_radio_Marines],
+        .radio-button-container label[for=military_branch_radio_Coast\ Guard],
+        .radio-button-container label[for=military_branch_radio_Air\ Force],
+        .radio-button-container label[for=military_branch_radio_Army],
+        .radio-button-container label[for=military_branch_radio_Navy],
+        .radio-button-container label[for=military_branch_radio_Space\ Force] {
+            width: 9.7em !important;
+        }
+
+        div#serviceC fieldset .radio-button-container label {
+            /* width: 17em!important; */
+            font-size: 21px !important;
+        }
+
+        select#service_start_date_date_MONTH,
+        select#service_start_date_date_DAY,
+        select#service_start_date_date_YEAR,
+        select#service_end_date_date_MONTH,
+        select#service_end_date_date_DAY,
+        select#service_end_date_date_YEAR {
+            width: 7.2em !important;
+        }
+
+        label[for=service_start_date_date_MONTH],
+        label[for=service_end_date_date_MONTH] {
+            max-width: 100% !important;
+        }
+
+        label[for=time_of_service_dropdown],
+        label[for=referral_other_input] {
+            max-width: 70% !important;
+        }
+
+        label[for=last_command_before_eas_input],
+        label[for=referral_dropdown] {
+            max-width: 42% !important;
+        }
+
+        select#level_flexibleduration,
+        input#additional_amountname,
+        input#donor_addr_street1name,
+        input#donor_addr_street2name,
+        select#donor_addr_country,
+        input#donor_email_addressname,
+        select#billing_title,
+        select#billing_suffix,
+        input#billing_addr_street1name,
+        input#billing_addr_street2name,
+        select#billing_addr_country,
+        input#spouse_email_input,
+        select#spouse_relationship_dropdown,
+        input#referral_other_input,
+        input#highest_rank_input,
+        input#last_command_before_eas_input,
+        select#referral_dropdown,
+        select#time_of_service_dropdown {
+            max-width: 40.4% !important;
+        }
+
+        p.caption {
+            font-size: 12pt !important;
+        }
+
+        /* FOOTER */
+
+        li img {
+            width: 36px;
+        }
+
+    }
+
+    @media (max-width: 380px) {
+        div.progress-bar-step-container {
+            padding-right: 4px;
+            margin-bottom: 5px;
+        }
+
+        .mHeader {
+            font-size: 31px;
+        }
+
+        .radio-button-container label,
+        .donation-level-input-container.form-input {
+            width: 14.8em !important;
+        }
+
+        .donation-levels .donation-level-input-container.form-input,
+        .designated-giving-recurring-row label {
+            width: 15em !important;
+        }
+
+        select#level_flexibleduration,
+        input#additional_amountname,
+        input#donor_addr_street1name,
+        input#donor_addr_street2name,
+        select#donor_addr_country,
+        input#donor_email_addressname,
+        select#billing_title,
+        select#billing_suffix,
+        input#billing_addr_street1name,
+        input#billing_addr_street2name,
+        select#billing_addr_country,
+        input#spouse_email_input,
+        select#spouse_relationship_dropdown,
+        input#referral_other_input,
+        input#highest_rank_input,
+        input#last_command_before_eas_input,
+        select#referral_dropdown,
+        select#time_of_service_dropdown {
+            width: 53.2em !important;
+
+        }
+
+        input#donor_addr_cityname,
+        select#donor_addr_state,
+        input#donor_addr_zipname,
+        select#billing_addr_state,
+        input#billing_addr_zipname {
+            max-width: 60% !important;
+        }
+
+        input#donor_addr_cityname {
+            width: 39.2em !important;
+        }
+
+        input#billing_first_namename,
+        input#billing_middle_namename,
+        input#billing_last_namename,
+        input#donor_first_namename,
+        input#donor_middle_namename,
+        input#donor_last_namename {
+            width: 24.35em !important;
+        }
+
+        input#billing_addr_cityname {
+            width: 25.9em !important;
+        }
+
+        input#donor_phonename {
+            width: 24.5em !important;
+        }
+
+        div.payment-field-container #responsive_payment_typecc_number_row input {
+            max-width: 50% !important;
+            margin-left: 0px;
+        }
+
+        select#birtdate_date_MONTH,
+        select#birtdate_date_DAY,
+        select#birtdate_date_YEAR {
+            width: 7.45em !important;
+        }
+
+        select#billing_addr_state,
+        input#billing_addr_zipname {
+            width: 17em !important;
+        }
+
+        select#responsive_payment_typecc_exp_date_MONTH,
+        select#responsive_payment_typecc_exp_date_YEAR,
+        div.payment-field-container #responsive_payment_typecc_cvv_row input {
+            width: 7.2em;
+        }
+
+        label[for="spouseCardholder"] {
+            max-width: 90%;
+            font-size: 23px !important;
+        }
+
+        select#secondary_relationship_2_dropdown,
+        input#secondary_email_2_input,
+        input#secondary_first_name_2_input,
+        input#secondary_last_name_2_input,
+        select#secondary_relationship_3_dropdown,
+        input#secondary_email_3_input,
+        input#secondary_first_name_3_input,
+        input#secondary_last_name_3_input,
+        select#secondary_relationship_4_dropdown,
+        input#secondary_email_4_input,
+        input#secondary_first_name_4_input,
+        input#secondary_last_name_4_input,
+        select#secondary_relationship_5_dropdown,
+        input#secondary_email_5_input,
+        input#secondary_first_name_5_input,
+        input#secondary_last_name_5_input {
+            max-width: 38% !important;
+        }
+
+        label[for="additional_cardholders_number_radio_0"],
+        label[for="additional_cardholders_number_radio_1"],
+        label[for="additional_cardholders_number_radio_2"],
+        label[for="additional_cardholders_number_radio_3"],
+        label[for="additional_cardholders_number_radio_4"] {
+            width: 2.85em !important;
+        }
+
+        input#spouse_first_name_input,
+        input#spouse_last_name_input {
+            width: 24.4em;
+        }
+
+        select#spouseData4 {
+            max-width: 38%;
+        }
+
+        /* PAGE 2 */
+        /* h2.section-header-container {
+            font-size: 35px!important;
+        } */
+
+        .sealContainer {
+            column-gap: 137px;
+            /* margin-left: 67px!important; */
+        }
+
+        .radio-button-container label[for=military_branch_radio_Marines],
+        .radio-button-container label[for=military_branch_radio_Coast\ Guard],
+        .radio-button-container label[for=military_branch_radio_Air\ Force],
+        .radio-button-container label[for=military_branch_radio_Army],
+        .radio-button-container label[for=military_branch_radio_Navy],
+        .radio-button-container label[for=military_branch_radio_Space\ Force] {
+            width: 9.1em !important;
+        }
+
+        div#serviceC fieldset .radio-button-container label {
+            /* width: 17em!important; */
+            font-size: 20px !important;
+        }
+
+        select#service_start_date_date_MONTH,
+        select#service_start_date_date_DAY,
+        select#service_start_date_date_YEAR,
+        select#service_end_date_date_MONTH,
+        select#service_end_date_date_DAY,
+        select#service_end_date_date_YEAR {
+            width: 6.7em !important;
+        }
+
+        label[for=service_start_date_date_MONTH],
+        label[for=service_end_date_date_MONTH] {
+            max-width: 100% !important;
+        }
+
+        label[for=time_of_service_dropdown],
+        label[for=referral_other_input] {
+            max-width: 70% !important;
+        }
+
+        label[for=last_command_before_eas_input],
+        label[for=referral_dropdown] {
+            max-width: 42% !important;
+        }
+
+        select#level_flexibleduration,
+        input#additional_amountname,
+        input#donor_addr_street1name,
+        input#donor_addr_street2name,
+        select#donor_addr_country,
+        input#donor_email_addressname,
+        select#billing_title,
+        select#billing_suffix,
+        input#billing_addr_street1name,
+        input#billing_addr_street2name,
+        select#billing_addr_country,
+        input#spouse_email_input,
+        select#spouse_relationship_dropdown,
+        input#referral_other_input,
+        input#highest_rank_input,
+        input#last_command_before_eas_input,
+        select#referral_dropdown,
+        select#time_of_service_dropdown {
+            max-width: 45.2% !important;
+        }
+
+        p.caption {
+            font-size: 12pt !important;
+        }
+
+        /* FOOTER */
+        li img {
+            width: 38px;
+        }
+
+    }
+
+    @media (max-width: 325px) {
+        .mHeader {
+            font-size: 25px;
+        }
+
+        .bnftList ul li {
+            font-size: 12pt;
+        }
+
+        .radio-button-container label,
+        .donation-level-input-container.form-input {
+            width: 12.9em !important;
+        }
+
+        #level_flexible_row .FormLabelText {
+            margin-left: 17px !important;
+            font-size: 20px;
+        }
+
+        .donation-levels .donation-level-input-container.form-input,
+        .designated-giving-recurring-row label {
+            width: 12.8em !important;
+        }
+
+        select#level_flexibleduration,
+        input#additional_amountname,
+        input#donor_addr_street1name,
+        input#donor_addr_street2name,
+        select#donor_addr_country,
+        input#donor_email_addressname,
+        select#billing_title,
+        select#billing_suffix,
+        input#billing_addr_street1name,
+        input#billing_addr_street2name,
+        select#billing_addr_country,
+        input#spouse_email_input,
+        select#spouse_relationship_dropdown,
+        input#referral_other_input,
+        input#highest_rank_input,
+        input#last_command_before_eas_input,
+        select#referral_dropdown,
+        select#time_of_service_dropdown {
+            width: 45.2em !important;
+        }
+
+        input#donor_first_namename,
+        input#donor_middle_namename,
+        input#donor_last_namename {
+            width: 28.5em !important;
+        }
+
+        input#billing_addr_cityname {
+            width: 21.9em !important;
+        }
+
+        input#billing_first_namename,
+        input#billing_middle_namename,
+        input#billing_last_namename,
+        input#donor_first_namename,
+        input#donor_middle_namename,
+        input#donor_last_namename {
+            width: 20.7em !important;
+        }
+
+        input#donor_addr_cityname,
+        select#billing_addr_state,
+        input#billing_addr_zipname {
+            max-width: 50% !important;
+        }
+
+        input#donor_addr_cityname {
+            width: 40.5em !important;
+        }
+
+        input#donor_phonename {
+            width: 20.8em !important;
+        }
+
+        select#birtdate_date_MONTH,
+        select#birtdate_date_DAY,
+        select#birtdate_date_YEAR {
+            width: 6.2em !important;
+        }
+
+        select#billing_addr_state,
+        input#billing_addr_zipname {
+            width: 17.2em !important;
+        }
+
+        select#secondary_relationship_2_dropdown,
+        input#secondary_email_2_input,
+        input#secondary_first_name_2_input,
+        input#secondary_last_name_2_input,
+        select#secondary_relationship_3_dropdown,
+        input#secondary_email_3_input,
+        input#secondary_first_name_3_input,
+        input#secondary_last_name_3_input,
+        select#secondary_relationship_4_dropdown,
+        input#secondary_email_4_input,
+        input#secondary_first_name_4_input,
+        input#secondary_last_name_4_input,
+        select#secondary_relationship_5_dropdown,
+        input#secondary_email_5_input,
+        input#secondary_first_name_5_input,
+        input#secondary_last_name_5_input {
+            max-width: 32% !important;
+        }
+
+        div.payment-field-container #responsive_payment_typecc_number_row input {
+            max-width: 41.5% !important;
+        }
+
+        select#responsive_payment_typecc_exp_date_MONTH,
+        select#responsive_payment_typecc_exp_date_YEAR,
+        div.payment-field-container #responsive_payment_typecc_cvv_row input {
+            width: 6em;
+        }
+
+        a.HelpLink {
+            width: 100%;
+            transform: translate(-57px, 92px);
+            font-size: 15px;
+        }
+
+        button#pstep_next {
+            font-size: 22px;
+        }
+
+        .mobile div.progress-bar-step-text-container {
+            display: inherit;
+            font-size: 13px;
+            margin-right: 0px;
+        }
+
+        select#donor_addr_state,
+        input#donor_addr_zipname {
+            max-width: 67% !important;
+        }
+
+        select#billing_addr_state,
+        input#billing_addr_zipname {
+            max-width: 52% !important;
+        }
+
+        label[for="additional_cardholders_number_radio_0"],
+        label[for="additional_cardholders_number_radio_1"],
+        label[for="additional_cardholders_number_radio_2"],
+        label[for="additional_cardholders_number_radio_3"],
+        label[for="additional_cardholders_number_radio_4"] {
+            width: 2.4em !important;
+        }
+
+        input#spouse_first_name_input,
+        input#spouse_last_name_input {
+            width: 20.8em;
+        }
+
+        select#spouseData4 {
+            max-width: 32%;
+        }
+
+        /* PAGE 2 */
+        h2.section-header-container {
+            font-size: 32px !important;
+        }
+
+        .sealContainer {
+            column-gap: 113px;
+            margin-left: 44px !important;
+            max-width: 70% !important;
+        }
+
+        .radio-button-container label[for=military_branch_radio_Marines],
+        .radio-button-container label[for=military_branch_radio_Coast\ Guard],
+        .radio-button-container label[for=military_branch_radio_Air\ Force],
+        .radio-button-container label[for=military_branch_radio_Army],
+        .radio-button-container label[for=military_branch_radio_Navy],
+        .radio-button-container label[for=military_branch_radio_Space\ Force] {
+            width: 7.2em !important;
+        }
+
+        div#serviceC fieldset .radio-button-container label {
+            /* width: 17em!important; */
+            font-size: 16.4px !important;
+        }
+
+        select#service_start_date_date_MONTH,
+        select#service_start_date_date_DAY,
+        select#service_start_date_date_YEAR,
+        select#service_end_date_date_MONTH,
+        select#service_end_date_date_DAY,
+        select#service_end_date_date_YEAR {
+            width: 5.3em !important;
+        }
+
+        label[for=service_start_date_date_MONTH],
+        label[for=service_end_date_date_MONTH] {
+            max-width: 100% !important;
+        }
+
+        label[for=time_of_service_dropdown],
+        label[for=referral_other_input] {
+            max-width: 60% !important;
+        }
+
+        label[for=last_command_before_eas_input],
+        label[for=referral_dropdown] {
+            max-width: 42% !important;
+            font-size: 15pt !important;
+        }
+
+        select#level_flexibleduration,
+        input#additional_amountname,
+        input#donor_addr_street1name,
+        input#donor_addr_street2name,
+        select#donor_addr_country,
+        input#donor_email_addressname,
+        select#billing_title,
+        select#billing_suffix,
+        input#billing_addr_street1name,
+        input#billing_addr_street2name,
+        select#billing_addr_country,
+        input#spouse_email_input,
+        select#spouse_relationship_dropdown,
+        input#referral_other_input,
+        input#highest_rank_input,
+        input#last_command_before_eas_input,
+        select#referral_dropdown,
+        select#time_of_service_dropdown {
+            max-width: 43.2% !important;
+        }
+
+        p.caption {
+            font-size: 10pt !important;
+        }
+
+        form .button-container button.finish-step {
+            font-size: 23px !important;
+        }
+
+        /* FOOTER */
+        .col-lg-6.col-sm-12.left h3 {
+            font-size: 20pt;
+        }
+
+        footer .top .left p,
+        .col-lg-5.left p {
+            font-size: 12pt !important;
+        }
+
+        .col-lg-1.col-sm-2.col-xs-4 a img {
+            margin-left: 50px;
+        }
+
+        .marine-logo-wrapper {
+            margin-top: 10px;
+        }
+
+        li img {
+            width: 30px;
+        }
+    }
+
+    @media only screen and (max-width: 767px) {
+        .mobile div.html-caption-container {
+            width: 100%;
+        }
+
+        .mobile div.responsive button.step-button {
+            width: 90% !important;
+            max-width: 100% !important;
+            float: none;
+        }
+
+        .mobile div.radio-button-container {
+            margin-top: 3px !important;
+        }
+
+    }
+</style>

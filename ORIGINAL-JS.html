@@ -1,0 +1,991 @@
+<script>
+    // TOOLS
+    // Triggers the "change" event
+    var changeEvent = new CustomEvent('change')
+
+    // Search for URL parameter & value
+    var urlParams = new URLSearchParams(window.location.search)
+
+    // Returns the key code, fix implemented for mobile devices input fields
+    var getKeyCode = function (str) {
+        return str.charCodeAt(str.length - 1)
+    }
+
+    // Separate thousands with commas
+    function commaSeparated(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+
+    // Stores item in session
+    function storeInSession(name, value) {
+        sessionStorage.setItem(client + '-' + form + '-' + name, value)
+    }
+
+    // Retrieves item from session
+    function retrieveFromSession(name) {
+        return sessionStorage.getItem(client + '-' + form + '-' + name)
+    }
+
+    // Updates the process button's text
+    function updateButtonText(amount) {
+        var extraText = MONTHLY ? ' Annually' : ''
+        // console.log("updating button", LO_processButton)
+        LO_processButton.textContent = ('Donate $' + commaSeparated(amount) + extraText)
+    }
+
+    // Key codes for numeric inputs
+    var accepted = [8, 37, 39, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105,
+        110, 190, 200
+    ]
+
+    // IDENTIFIERS
+    var client = 'mmaf'
+    var form = '[[S120:dc:donFormId]]'
+
+    // GLOBAL VALUES
+    var CHOSEN
+    var MONTHLY
+    var FEES_COVERED
+    var TRIBUTE_CHECKED
+    var ONE_TIME_AMOUNTS
+    var MONTHLY_AMOUNTS
+
+    // Luminate Online Native Fields
+    var LO_amount = 0
+    var LO_monthly
+    var LO_cardNumber
+    var LO_cardExpMonth
+    var LO_cardExpYear
+    var LO_cardCVV
+    var LO_bankRouting
+    var LO_bankAccount
+    var LO_bankAccountVerify
+    var LO_bankAccountType
+    var LO_feeOption
+    var LO_feeValue
+    var LO_companyGift
+    var LO_companyName
+    var LO_billingTitle
+    var LO_billingFirst
+    var LO_billingLast
+    var LO_billingStreet1
+    var LO_billingCity
+    var LO_billingState
+    var LO_billingZip
+    var LO_emailAddress
+    var LO_phoneNumber
+    var LO_tribute
+    var LO_tributeType
+    var LO_tributeFirst
+    var LO_tributeLast
+    var LO_eCard
+    var LO_eCardSelections
+    var LO_eCardRecipients
+    var LO_eCardSubject
+    var LO_eCardMessage
+    var LO_processButton
+
+
+    // RKD Custom fields, inputs and controls
+    var RKD_customAmountButtons
+    var RKD_customOtherAmount
+    var RKD_customFrequencyRadios
+    var RKD_customLevelRadios
+    var RKD_additionalCardholdersButton
+    var new_donation_level_selected
+    var RKD_militaryStatus
+    var cardholder_military = 0
+
+    // RKD Custom fields    
+    function RKD_setNativeFields() {
+        /**
+         ** DEFINE INPUTS
+         **/
+        // Gift inputs
+        // LO_amount = document.getElementById('level_standardname')
+        LO_monthly = document.getElementById('level_flexibleduration')
+        // Credit Card inputs
+        LO_cardNumber = document.getElementById('responsive_payment_typecc_numbername')
+        LO_cardExpMonth = document.getElementById('responsive_payment_typecc_exp_date_MONTH')
+        LO_cardExpYear = document.getElementById('responsive_payment_typecc_exp_date_YEAR')
+        LO_cardCVV = document.getElementById('responsive_payment_typecc_cvvname')
+        // // Bank account inputs
+        // LO_bankRouting = document.getElementById('responsive_payment_typerouting_numbername')
+        // LO_bankAccount = document.getElementById('responsive_payment_typebank_accountname')
+        // LO_bankAccountVerify = document.getElementById('responsive_payment_typeverify_bank_accountname')
+        // LO_bankAccountType = document.querySelectorAll('input[name="responsive_payment_type.account_type"]')
+        // // Cover the fees inputs
+        // LO_feeOption = document.getElementById('cover_fee_option_radio')
+        // LO_feeValue = document.getElementById('cover_fee_value_input')
+        // // Company gift inputs
+        // LO_companyGift = document.getElementById('is_company_gift_radio')
+        // LO_companyName = document.getElementById('company_organization_name_input')
+        // Billing inputs
+        LO_billingTitle = document.getElementById('billing_title')
+        LO_billingFirst = document.getElementById('billing_first_namename')
+        LO_billingLast = document.getElementById('billing_last_namename')
+        LO_billingStreet1 = document.getElementById('billing_addr_street1name')
+        LO_billingCity = document.getElementById('billing_addr_cityname')
+        LO_billingState = document.getElementById('billing_addr_state')
+        LO_billingZip = document.getElementById('billing_addr_zipname')
+        LO_emailAddress = document.getElementById('donor_email_addressname')
+        LO_phoneNumber = document.getElementById('donor_phonename')
+        // //  Tribute inputs
+        // LO_tribute = document.getElementById('tribute_show_honor_fieldsname')
+        // LO_tributeType = document.getElementById('tribute_type')
+        // LO_tributeFirst = document.getElementById('tribute_honoree_first_namename')
+        // LO_tributeLast = document.getElementById('tribute_honoree_last_namename')
+        // // eCard inputs
+        // LO_eCard = document.getElementById('send_ecardname')
+        // LO_eCardSelections = document.querySelectorAll('input[name="stationery_layout_id"]')
+        // LO_eCardRecipients = document.getElementById('ecard_recpientsname')
+        // LO_eCardSubject = document.getElementById('tribute_ecard_subjectname')
+        // LO_eCardMessage = document.getElementById('tribute_ecard_messagename')
+        // Button
+        LO_processButton = document.getElementById('pstep_next')
+
+        RKD_formatGiftAmount()
+    }
+
+    function RKD_militaryStatusSelected() {
+
+        if (RKD_militaryStatus == " Active" | RKD_militaryStatus == " Reserves") {
+            switch (cardholder_military) {
+                case '0':
+                    // console.log("case 0");
+                    $('div[class*="donation-level-container-5"]').hide();
+                    $('div[class*="donation-level-container-10"]').show();
+                    break;
+                case '1':
+                    // console.log("case 1");
+                    $('div[class*="donation-level-container-6"]').hide();
+                    $('div[class*="donation-level-container-11"]').show();
+                    break;
+                case '2':
+                    // console.log("case 2");
+                    $('div[class*="donation-level-container-7"]').hide();
+                    $('div[class*="donation-level-container-12"]').show();
+                    break;
+                case '3':
+                    // console.log("case 3");
+                    $('div[class*="donation-level-container-8"]').hide();
+                    $('div[class*="donation-level-container-13"]').show();
+                    break;
+                case '4':
+                    $('div[class*="donation-level-container-9"]').hide();
+                    $('div[class*="donation-level-container-14"]').show();
+                    break;
+                default:
+                    // console.log("case default");
+                    $('div[class*="donation-level-container-5"]').hide();
+                    $('div[class*="donation-level-container-10"]').show();
+                    break;
+            }
+
+        } else {
+
+            switch (cardholder_military) {
+                case '0':
+                    // console.log("case 0");
+                    $('div[class*="donation-level-container-5"]').show();
+                    $('div[class*="donation-level-container-10"]').hide();
+                    break;
+                case '1':
+                    // console.log("case 1");
+                    $('div[class*="donation-level-container-6"]').show();
+                    $('div[class*="donation-level-container-11"]').hide();
+                    break;
+                case '2':
+                    // console.log("case 2");
+                    $('div[class*="donation-level-container-7"]').show();
+                    $('div[class*="donation-level-container-12"]').hide();
+                    break;
+                case '3':
+                    // console.log("case 3");
+                    $('div[class*="donation-level-container-8"]').show();
+                    $('div[class*="donation-level-container-13"]').hide();
+                    break;
+                case '4':
+                    $('div[class*="donation-level-container-9"]').show();
+                    $('div[class*="donation-level-container-14"]').hide();
+                    break;
+                default:
+                    // console.log("case default");
+                    $('div[class*="donation-level-container-5"]').show();
+                    $('div[class*="donation-level-container-10"]').hide();
+                    break;
+            }
+        }
+        $('input[name*="additional_cardholders_number_radio"]').val();
+
+    }
+
+    let radio = document.getElementsByName('military_status_radio')
+    radio.forEach(function (radio_current, index) {
+        radio_current.addEventListener('change', function () {
+            RKD_militaryStatus = this.value;
+
+            RKD_militaryStatusSelected()
+
+        });
+    });
+
+    function RKD_formatGiftAmount() {
+
+        RKD_formatPaymentInfo()
+    }
+
+
+    function RKD_formatPaymentInfo() {
+
+        // Set necessary attributes
+        LO_cardNumber.setAttribute('maxlength', 16)
+        LO_cardCVV.setAttribute('maxlength', 4)
+
+        // Format next section
+        RKD_formatBillingDetails()
+    }
+
+
+    function RKD_formatBillingDetails() {
+        RKD_addFormListeners()
+        // All sections are formatted, define array
+        // RKD_defineGiftArray()
+    }
+
+    function RKD_defineGiftArray() {
+        // Fetch amounts from config file        
+        ONE_TIME_AMOUNTS = formConfig.oneTimeArray
+        MONTHLY_AMOUNTS = formConfig.monthlyArray
+
+        RKD_renderGiftArray()
+    }
+
+    function RKD_renderGiftArray() {
+        ONE_TIME_AMOUNTS.forEach(function (amount, index) {
+            var button = document.createElement('div')
+            button.classList.add('RKD-gift-array-button')
+            button.setAttribute('data-amount', amount)
+            button.textContent = '$' + commaSeparated(amount)
+            document.querySelector('#one-time-array').appendChild(button)
+        })
+
+        MONTHLY_AMOUNTS.forEach(function (amount, index) {
+            var button = document.createElement('div')
+            button.classList.add('RKD-gift-array-button')
+            button.setAttribute('data-amount', amount)
+            button.textContent = '$' + commaSeparated(amount)
+            document.querySelector('#monthly-array').appendChild(button)
+        })
+
+        RKD_addFormListeners()
+    }
+
+    function RKD_get_amount_from_choosen(selectedamountelement) {
+        var get_chosen
+        if (selectedamountelement) {
+            get_chosen = [selectedamountelement]
+        } else {
+            get_chosen = document.getElementsByClassName('RKD-chosen');
+
+            // console.log("get element from choosen", get_chosen)
+        }
+        for (let index = 0; index < get_chosen.length; index++) {
+            const element = get_chosen[index];
+            // console.log("Element console log", element)
+            var amount_chosen = element.getElementsByClassName('donation-level-amount-container');
+            var additionalAmount = document.getElementById('additional_amountname').value
+            if (amount_chosen.length) {
+
+                try {
+                    LO_amount = amount_chosen[0].innerText.replace('$', '')
+                    LO_amount = LO_amount.replace(',', '')
+                    // console.log("replacement applied", LO_amount)
+                    // console.log("Amount Chosen test", amount_chosen)
+                    RKD_updateGiftAmount(LO_amount, additionalAmount)
+                    // RKD_updateGiftAmount(LO_amount)     
+                } catch (error) {
+                    console.log("get amount error from chosen", error)
+                    // RKD_updateGiftAmount(0)     
+                }
+            }
+        }
+
+    }
+
+    function RKD_addFormListeners() {
+
+        const config = {
+            attributes: true,
+            childList: true,
+            characterData: false,
+            subtree: true
+        };
+        // Defining custom controls
+        RKD_customAmountButtons = document.querySelectorAll('.donation-level-input-container')
+        RKD_customOtherAmount = document.getElementById('additional_amountname')
+        RKD_customFrequencyRadios = document.querySelectorAll('input[name="level_flexiblegift_type"]')
+        RKD_customLevelRadios = document.querySelectorAll('input[name="level_flexibleexpandedsubmit"]')
+        RKD_additionalCardholdersButton = document.querySelectorAll('input[name="additional_cardholders_number_radio"]')
+        // console.log("Additional Cardholder Listener", RKD_additionalCardholdersButton)
+
+        // Gift array click handler
+        RKD_customAmountButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Remove the "chosen" class
+                RKD_customOtherAmount.classList.remove('RKD-chosen')
+                RKD_customAmountButtons.forEach(function (element) {
+                    element.classList.remove('RKD-chosen')
+                })
+                // Add the "chosen" class to clicked element
+                button.classList.add('RKD-chosen')
+                // Reset "Other amount"
+                RKD_customOtherAmount.value = ''
+                // Update the amount 
+                RKD_get_amount_from_choosen()
+                // RKD_updateGiftAmount(button.getAttribute('data-amount'))
+            })
+            var observer = new MutationObserver(function (mutations) {
+
+                var RKD_ChosenDonationLevel = document.getElementsByClassName(
+                    'RKD-chosen-donation-level')
+                // console.log("RKD-chosen-donation-level", RKD_ChosenDonationLevel)
+                if (RKD_ChosenDonationLevel.length) {
+                    // console.log("observer functionality", button)
+
+                    RKD_get_amount_from_choosen(RKD_ChosenDonationLevel[0])
+                }
+                // console.log("Button ClassName info", button.className)
+
+            });
+            observer.observe(button, config);
+        })
+
+
+
+
+        RKD_additionalCardholdersButton.forEach(function (button) {
+            button.addEventListener('click', function () {
+
+            })
+        })
+
+        // Other amount input handlers
+        RKD_customOtherAmount.addEventListener('focus', function () {
+            // Reset amount
+            CHOSEN = 0
+
+            // Add the "chosen" class to clicked element
+            RKD_customOtherAmount.classList.add('RKD-chosen')
+            // Update the amount
+            // RKD_updateGiftAmount(CHOSEN)
+            RKD_get_amount_from_choosen()
+        })
+
+        RKD_customOtherAmount.addEventListener('blur', function (e) {
+            var amount = this.value
+            e = e || window.event
+            var decimal = amount.split('.')
+            var charCode = e.keyCode || e.which
+            if (charCode == 0 || charCode == 229) {
+                charCode = getKeyCode(this.value)
+            }
+
+            if (e.ctrlKey || e.shiftKey || (decimal.length > 1 && (charCode === 110 || charCode === 190)) || !
+                accepted.includes(charCode)) {
+                e.preventDefault()
+            } else {
+                setTimeout(function () {
+                    var curValue = RKD_customOtherAmount.value
+                    var amt = curValue
+                    // RKD_updateGiftAmount(amt)
+                    RKD_get_amount_from_choosen()
+                }, 50)
+            }
+        })
+
+        RKD_customOtherAmount.addEventListener('input', function (e) {
+            var amount = this.value
+            e = e || window.event
+            var decimal = amount.split('.')
+            var charCode = e.keyCode || e.which
+            if (charCode == 0 || charCode == 229) {
+                charCode = getKeyCode(this.value)
+            }
+
+            if (e.ctrlKey || e.shiftKey || (decimal.length > 1 && (charCode === 110 || charCode === 190)) || !
+                accepted.includes(charCode)) {
+                e.preventDefault()
+            } else {
+                setTimeout(function () {
+                    var curValue = RKD_customOtherAmount.value
+                    var amt = curValue
+                    // RKD_updateGiftAmount(amt)
+                    RKD_get_amount_from_choosen()
+                }, 50)
+            }
+        })
+
+        RKD_customOtherAmount.addEventListener('keydown', function (e) {
+            var amount = this.value
+            e = e || window.event
+            var decimal = amount.split('.')
+            var charCode = e.keyCode || e.which
+            if (charCode == 0 || charCode == 229) {
+                charCode = getKeyCode(this.value)
+            }
+
+            if (e.ctrlKey || e.shiftKey || (decimal.length > 1 && (charCode === 110 || charCode === 190)) || !
+                accepted.includes(charCode)) {
+                e.preventDefault()
+            } else {
+                setTimeout(function () {
+                    var curValue = RKD_customOtherAmount.value
+                    var amt = curValue
+                    // RKD_updateGiftAmount(amt)
+                    RKD_get_amount_from_choosen()
+                }, 50)
+            }
+        })
+
+        RKD_customOtherAmount.addEventListener('change', function (e) {
+            var amount = this.value
+            e = e || window.event
+            var decimal = amount.split('.')
+            var charCode = e.keyCode || e.which
+            if (charCode == 0 || charCode == 229) {
+                charCode = getKeyCode(this.value)
+            }
+
+            if (e.ctrlKey || e.shiftKey || (decimal.length > 1 && (charCode === 110 || charCode === 190)) || !
+                accepted.includes(charCode)) {
+                e.preventDefault()
+            } else {
+                setTimeout(function () {
+                    var curValue = RKD_customOtherAmount.value
+                    var amt = curValue
+                    // RKD_updateGiftAmount(amt)
+                    RKD_get_amount_from_choosen()
+                }, 50)
+            }
+        })
+
+        // Frequency selector handlers        
+        RKD_customFrequencyRadios.forEach(function (radio) {
+            radio.addEventListener('click', function () {
+                if (radio.id == 'level_flexiblegift_type1') {
+                    MONTHLY = false
+
+                } else if (radio.id == 'level_flexiblegift_type2') {
+                    MONTHLY = true
+
+                }
+                RKD_get_amount_from_choosen()
+                // Triggering hidden field
+                LO_monthly.value = 'MONTHLY'
+                LO_monthly.dispatchEvent(changeEvent)
+                // Storing in session
+                storeInSession('anually', MONTHLY)
+            })
+
+        })
+
+        RKD_setInitialValues()
+    }
+
+
+    function RKD_setInitialValues() {
+        // Retrieving session stored items in case of an error
+        var previousAmount = retrieveFromSession('chosen')
+        var hadMonthly = retrieveFromSession('anually')
+        var hadTribute = retrieveFromSession('tribute')
+        var hadFees = retrieveFromSession('fees')
+        var wasCompanyGift = retrieveFromSession('company-gift')
+        var hadeCard = retrieveFromSession('eCard')
+
+        // Check for frequency
+        if (urlParams.has('anually')) {
+            if (urlParams.get('anually') == 'on') {
+                document.getElementById('level_flexiblegift_type2').click()
+            } else {
+                document.getElementById('level_flexiblegift_type1').click()
+            }
+        } else if (hadMonthly != null) {
+            hadMonthly == 'true' ? document.getElementById('level_flexiblegift_type2').click() : document
+                .getElementById('level_flexiblegift_type1').click()
+        } else if (formConfig.defaultRecurring == true) {
+            document.getElementById('level_flexiblegift_type1').click()
+        } else {
+            document.getElementById('level_flexiblegift_type2').click()
+        }
+
+        // Check for amount       
+        var amount
+        var button
+        if (urlParams.has('chosen')) {
+            amount = urlParams.get('chosen')
+            if (isNaN(amount)) {
+                // Check the frequency
+                MONTHLY == true ? amount = formConfig.defaultMonthly : amount = formConfig.defaultOneTime
+            }
+        } else if (previousAmount != null) {
+            amount = previousAmount
+        } else {
+            MONTHLY == true ? amount = formConfig.defaultMonthly : amount = formConfig.defaultOneTime
+        }
+
+        if (MONTHLY) {
+            // Search for button          
+            button = document.querySelector('#donation-levels > div[data-amount="' + amount + '"]')
+            if (button) {
+                button.click()
+            } else {
+                RKD_customOtherAmount.focus()
+                RKD_customOtherAmount.value = amount
+                RKD_customOtherAmount.blur()
+            }
+        } else {
+            // Search for button          
+            button = document.querySelector('#donation-levels > div[data-amount="' + amount + '"]')
+            if (button) {
+                button.click()
+            } else {
+                RKD_customOtherAmount.focus()
+                RKD_customOtherAmount.value = amount
+                RKD_customOtherAmount.blur()
+            }
+        }
+
+        // Check for debug
+        if (urlParams.has('debug')) {
+            document.querySelectorAll('.RKD-luminate-field').forEach(function (element) {
+                element.classList.add('RKD-debug')
+            })
+        }
+    }
+
+    function RKD_updateGiftAmount(amount, additionalAmount) {
+        if (additionalAmount) {
+            additionalAmount = Number(additionalAmount)
+            // console.log("Update Gift Button Additional Amount", additionalAmount)
+        } else {
+            additionalAmount = 0
+        }
+        amount = Number(amount)
+        CHOSEN = amount + additionalAmount
+        var calculatedAmount = 0
+        // var calculatedFee = Number((amount * formConfig.feePercentage) / 100)
+        calculatedAmount = CHOSEN
+
+        // LO_amount.value = calculatedAmount.toFixed(2)
+        updateButtonText(commaSeparated(calculatedAmount.toFixed(2)))
+        storeInSession('chosen', CHOSEN)
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        $('input[id^="secondary_"]').closest('.custom-field-container.form-row').addClass('family_membership');
+        $('h2.section-header-container:contains("Additional Cardholder")').wrap(
+            '<div class="family_membership"></div>');
+
+        //wraps every 5 div.survey-question-containers in class name "guest"
+        var divs = $(".family_membership");
+        for (var i = 0; i < divs.length; i += 5) {
+            divs.slice(i, i + 5).wrapAll("<div class='additional_cardholder'></div>");
+        }
+
+        //for each div with class "guest" adds -number (ex: additional_cardholder-0, additional_cardholder-1, additional_cardholder-2, etc)
+        $('.additional_cardholder').each(function (i, target) {
+            // console.log("additional_cardholder---------", i);
+            $(this).attr('class', 'additional_cardholder-' + i);
+
+        });
+
+        //wraps every 5 div.survey-question-containers in class name "guest"
+        var divs = $(".donation-level-container");
+        for (var i = 0; i < divs.length; i += 5) {
+            divs.slice(i, i + 5).wrapAll("<div class='veteran-active'></div>");
+        }
+
+
+        //for each div with class "donation-level-container" adds -number (ex: donation-level-container-0, donation-level-container-1, adonation-level-container-2, etc)
+        $('.donation-level-container').each(function (i, target) {
+            $(this).attr('class', 'donation-level-container-' + i);
+
+        });
+
+        //hide additional cardholders by default
+        $('div[class*="additional_cardholder-"]').hide();
+        $('div[class*="donation-level-container-0"]').show();
+        $('div[class*="donation-level-container-1"]').hide();
+        $('div[class*="donation-level-container-2"]').hide();
+        $('div[class*="donation-level-container-3"]').hide();
+        $('div[class*="donation-level-container-4"]').hide();
+        $('div[class*="donation-level-container-5"]').show();
+        $('div[class*="donation-level-container-6"]').hide();
+        $('div[class*="donation-level-container-7"]').hide();
+        $('div[class*="donation-level-container-8"]').hide();
+        $('div[class*="donation-level-container-9"]').hide();
+        $('div[class*="donation-level-container-10"]').show();
+        $('div[class*="donation-level-container-11"]').hide();
+        $('div[class*="donation-level-container-12"]').hide();
+        $('div[class*="donation-level-container-13"]').hide();
+        $('div[class*="donation-level-container-14"]').hide();
+
+
+    });
+
+    var donation_level_selected = '';
+    var donation_level_selected_previous_style;
+    var recurrency_level;
+
+    function handle_default_style_donation_level_click(donation_levels) {
+        for (let index = 0; index < donation_levels.length; index++) {
+            const element = donation_levels[index];
+            element.style = donation_level_selected_previous_style;
+        }
+    }
+
+    function handle_checked_style_donation_level_click(element) {
+        element.style.backgroundColor = "#063471";
+        element.style.color = "white";
+        element.style.borderStyle = "none";
+    }
+
+    function handle_donation_level_click(element) {
+        //element.classList.add('custom-checked');
+
+        var donation_levels = document.getElementsByClassName("donation-level-input-container");
+
+        var donation_level_selected_previous = element.getElementsByClassName("donation-level-input-container")[0];
+        donation_level_selected_previous_style = donation_level_selected_previous.style;
+
+        //console.log(donation_level_selected_previous_style);
+        handle_default_style_donation_level_click(donation_levels);
+
+        handle_checked_style_donation_level_click(donation_level_selected_previous);
+        //element.donation-level-input-container form-input
+        donation_level_selected = element.className;
+        // console.log(donation_level_selected);
+        var donation_level_container_index = donation_level_selected.split('-')[3];
+        donation_level_container_index = parseInt(donation_level_container_index);
+
+        // $('.'+donation_level_selected).hide();
+
+        // var new_donation_level_selected; 
+        if (donation_level_container_index < 5) {
+
+        }
+        if (donation_level_container_index >= 5 && donation_level_container_index < 10) {
+
+        }
+        if (donation_level_container_index >= 10 && donation_level_container_index < 14) {
+
+        }
+
+    }
+
+    function show_additional_cardholder_and_donation_level_default() {
+        // console.log("show_additional_cardholder_and_donation_level_default");
+        $('.donation-level-container-0').show();
+        $('.donation-level-container-5').show();
+        $('.donation-level-container-10').show();
+
+        var donation_levels = document.getElementsByClassName("donation-level-input-container");
+
+        handle_default_style_donation_level_click(donation_levels);
+
+        // RKD_get_amount_from_choosen()
+    }
+
+    function hide_additional_cardholder_and_donation_level_all() {
+
+        $('.additional_cardholder-0').hide();
+        $('.additional_cardholder-1').hide();
+        $('.additional_cardholder-2').hide();
+        $('.additional_cardholder-3').hide();
+
+        for (var container_index = 0; container_index < 14; container_index++) {
+            $('.donation-level-container-' + container_index).hide();
+        }
+    }
+
+    function show_additional_cardholder_and_donation_level(value) {
+        // console.log("show_additional_cardholder_and_donation_level:value", value);
+        var donation_level_container_pos_0 = {
+            "0": "donation-level-container-0",
+            "1": "donation-level-container-1",
+            "2": "donation-level-container-2",
+            "3": "donation-level-container-3",
+            "4": "donation-level-container-4",
+        };
+
+        var donation_level_container_pos_1 = {
+            "0": "donation-level-container-5",
+            "1": "donation-level-container-6",
+            "2": "donation-level-container-7",
+            "3": "donation-level-container-8",
+            "4": "donation-level-container-9",
+        };
+
+        var donation_level_container_pos_2 = {
+            "0": "donation-level-container-10",
+            "1": "donation-level-container-11",
+            "2": "donation-level-container-12",
+            "3": "donation-level-container-13",
+            "4": "donation-level-container-14",
+        };
+
+        var donation_level_container_pos_0_amount = {
+            "0": "$4,500.00",
+            "1": "$4,550.00",
+            "2": "$4,600.00",
+            "3": "$4,650.00",
+            "4": "$4,700.00",
+        };
+
+        var donation_level_container_pos_1_amount = {
+            "0": "$200.00",
+            "1": "$250.00",
+            "2": "$300.00",
+            "3": "$350.00",
+            "4": "$400.00",
+        };
+
+        var donation_level_container_pos_2_amount = {
+            "0": "$35.00",
+            "1": "$85.00",
+            "2": "$135.00",
+            "3": "$185.00",
+            "4": "$235.00",
+        };
+
+
+        hide_additional_cardholder_and_donation_level_all();
+        // show_additional_cardholder_and_donation_level_default();
+
+        var donation_level_container_index = donation_level_selected.split('-')[3];
+        donation_level_container_index = parseInt(donation_level_container_index);
+
+        // $('.'+donation_level_selected).hide();
+
+
+        if (donation_level_container_index < 5) {
+            new_donation_level_selected = donation_level_container_pos_0[value];
+            evalMatchingGift(donation_level_container_pos_0_amount[value]);
+            updateDonorCoverAmount(donation_level_container_pos_0_amount[value]);
+            // console.log("label Donation Level Selected 0", label_donation_level_container_selected['0'])
+            // storeInSession('MembershipLevel', label_donation_level_container_selected['0'])
+        }
+        if (donation_level_container_index >= 5 && donation_level_container_index < 10) {
+            new_donation_level_selected = donation_level_container_pos_1[value];
+            evalMatchingGift(donation_level_container_pos_1_amount[value]);
+            updateDonorCoverAmount(donation_level_container_pos_1_amount[value]);
+            // console.log("label Donation Level Selected 1", label_donation_level_container_selected['1'])
+            // storeInSession('MembershipLevel', label_donation_level_container_selected['1'])
+        }
+        if (donation_level_container_index >= 10 && donation_level_container_index < 14) {
+            new_donation_level_selected = donation_level_container_pos_2[value];
+            evalMatchingGift(donation_level_container_pos_2_amount[value]);
+            updateDonorCoverAmount(donation_level_container_pos_2_amount[value]);
+            // console.log("label Donation Level Selected 2", label_donation_level_container_selected['2'])
+            // storeInSession('MembershipLevel', label_donation_level_container_selected['2'])
+        }
+
+
+        var removePreviousChosen = document.getElementsByClassName('RKD-chosen-donation-level')
+
+        for (let index = 0; index < removePreviousChosen.length; index++) {
+            const element = removePreviousChosen[index];
+            element.classList.remove('RKD-chosen-donation-level')
+        }
+        var RKDChosenAll = document.getElementsByClassName('donation-level-input-container form-input RKD-chosen')
+
+        for (let index = 0; index < RKDChosenAll.length; index++) {
+            const element = RKDChosenAll[index];
+            element.classList.remove('RKD-chosen')
+        }
+
+        try {
+            var inner_new_donation_level_selected = document.getElementsByClassName(new_donation_level_selected)[0];
+            inner_new_donation_level_selected.classList.add('RKD-chosen-donation-level')
+            inner_new_donation_level_selected.classList.add('RKD-chosen')
+
+            var donation_level_selected_previous = inner_new_donation_level_selected.getElementsByClassName(
+                "donation-level-input-container")[0];
+
+            handle_checked_style_donation_level_click(donation_level_selected_previous);
+        } catch (error) {
+            console.log(error);
+        }
+
+
+        switch (value) {
+            case '0':
+                // console.log("case 0");
+                $('div[class*="additional_cardholder-"]').hide();
+                $('.' + donation_level_container_pos_0['0']).show();
+                $('.' + donation_level_container_pos_1['0']).show();
+                $('.' + donation_level_container_pos_2['0']).show();
+                break;
+            case '1':
+                // console.log("case 1");
+                $('div[class*="additional_cardholder-"]').hide();
+                $('.additional_cardholder-0').show();
+                $('.' + donation_level_container_pos_0['1']).show();
+                $('.' + donation_level_container_pos_1['1']).show();
+                $('.' + donation_level_container_pos_2['1']).show();
+                break;
+            case '2':
+                // console.log("case 2");
+                $('div[class*="additional_cardholder-"]').hide();
+                $('.additional_cardholder-0').show();
+                $('.additional_cardholder-1').show();
+                $('.' + donation_level_container_pos_0['2']).show();
+                $('.' + donation_level_container_pos_1['2']).show();
+                $('.' + donation_level_container_pos_2['2']).show();
+                break;
+            case '3':
+                // console.log("case 3");
+                $('div[class*="additional_cardholder-"]').hide();
+                $('.additional_cardholder-0').show();
+                $('.additional_cardholder-1').show();
+                $('.additional_cardholder-2').show();
+                $('.' + donation_level_container_pos_0['3']).show();
+                $('.' + donation_level_container_pos_1['3']).show();
+                $('.' + donation_level_container_pos_2['3']).show();
+                break;
+            case '4':
+                // console.log("case 4");
+                $('div[class*="additional_cardholder-"]').hide();
+                $('.additional_cardholder-0').show();
+                $('.additional_cardholder-1').show();
+                $('.additional_cardholder-2').show();
+                $('.additional_cardholder-3').show();
+                $('.' + donation_level_container_pos_0['4']).show();
+                $('.' + donation_level_container_pos_1['4']).show();
+                $('.' + donation_level_container_pos_2['4']).show();
+                break;
+            default:
+                // console.log("case default");
+                break;
+        }
+        RKD_militaryStatusSelected()
+        // RKD_get_amount_from_choosen()
+    }
+
+    function handle_additional_cardholders_donation_level_container(id, value, checked) {
+        if (id.includes("additional_cardholders_number_radio") && checked) {
+
+            show_additional_cardholder_and_donation_level(value);
+        }
+    }
+
+    function additional_cardholders_number_radio() {
+
+        const config = {
+            attributes: false,
+            childList: true,
+            characterData: false,
+            subtree: true
+        };
+
+        var observer = new MutationObserver(function (mutations) {
+
+            var elements = document.getElementsByName("additional_cardholders_number_radio");
+            var donation_level_elements = document.getElementsByClassName("veteran-active");
+            // handle_recurring_options();
+
+            if (document.contains(elements[0]) && document.contains(donation_level_elements[0])) {
+                observer.disconnect();
+
+                for (var i = 0; i < elements.length; i++) {
+                    const input = elements[i];
+
+                    input.onchange = function () {
+                        cardholder_military = this.value
+                        handle_additional_cardholders_donation_level_container(this.id, this.value, this
+                            .checked);
+                    };
+                }
+
+                for (let index = 0; index < donation_level_elements.length; index++) {
+                    const element = donation_level_elements[index];
+                    if (element.childNodes.length) {
+                        for (let inner_index = 0; inner_index < element.childNodes.length; inner_index++) {
+                            const inner_element = element.childNodes[inner_index];
+                            inner_element.onclick = function (e) {
+                                // console.log(this.className);
+                                handle_donation_level_click(this);
+                            };
+                        }
+                    }
+
+                }
+            }
+        });
+
+        observer.observe(document.body, config);
+
+    }
+
+    additional_cardholders_number_radio();
+
+    function donors_information() {
+
+        const config = {
+            attributes: false,
+            childList: true,
+            characterData: false,
+            subtree: true
+        };
+
+        var observer = new MutationObserver(function (mutations) {
+
+            document.getElementById('donor_addr_state').value;
+
+        });
+
+        observer.observe(document.body, config);
+    }
+
+    donors_information();
+
+
+    function RKD_initForm() {
+        // Check for page
+        if (urlParams.get(form + '.donation') === 'form1') {
+            // Form loads normally
+            RKD_setNativeFields()
+        } else if (urlParams.get(form + '.donation') === 'form2') {
+            // Form loads normally
+            // console.log('second page rendered')
+            RKD_setNativeFields()
+        } else if (urlParams.get(form + '.donation') === 'completed') {
+            // console.log('Thank you page rendered')
+            var MembershipLevels = retrieveFromSession('membershipLevel')
+            // console.log(MembershipLevels)
+            // Thank you page is rendered
+            return
+        } else {
+            // console.log('form loaded with error')
+            renderCreative()
+            // Form reloaded after an error
+            RKD_setNativeFields()
+
+            var MembershipLevels = retrieveFromSession('membershipLevel')
+            // console.log(MembershipLevels)
+        }
+
+        $('select option[value="Y:0"]').attr("selected", true);
+        $(document).ready(function () {
+            $(this).scrollTop(0);
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', function () {
+        RKD_initForm()
+    })
+</script>
