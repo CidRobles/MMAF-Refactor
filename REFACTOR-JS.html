@@ -21,6 +21,16 @@
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
 
+    // Key codes for numeric inputs
+    var accepted = [8, 37, 39, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105,
+        110, 190, 200
+    ]
+
+    // Returns the key code, fix implemented for mobile devices input fields
+    var getKeyCode = function (str) {
+        return str.charCodeAt(str.length - 1)
+    }
+
     // GLOBAL SCOPE
     var MEMBERSHIP_TYPE = ''
     var MEMBERSHIP_AMOUNT
@@ -140,13 +150,13 @@
         }
         // Check for cardholders
         if (CARDHOLDERS_COUNT == 0) {
-            $('#lifetime:first-child').show()
-            $('#active-duty:first-child').show()
-            $('#veteran:first-child').show()
+            $('#lifetime div.donation-level-container:first-child').show()
+            $('#active-duty div.donation-level-container:first-child').show()
+            $('#veteran div.donation-level-container:first-child').show()
 
-            $('#lifetime:not(:first-child)').hide()
-            $('#active-duty:not(:first-child)').hide()
-            $('#veteran:not(:first-child)').hide()
+            $('#lifetime div.donation-level-container').not(':first-child').hide()
+            $('#active-duty div.donation-level-container').not(':first-child').hide()
+            $('#veteran div.donation-level-container').not(':first-child').hide()
         } else {
             $('.donation-level-container:contains(' + CARDHOLDERS_COUNT + ' Cardholder)').show();
             $('.donation-level-container:not(:contains(' + CARDHOLDERS_COUNT + ' Cardholder))').hide();
@@ -161,7 +171,7 @@
             })
         })
 
-        // Membership type
+        // Membership type & amount
         $('input[name="level_flexibleexpanded"]').each(function (index, element) {
             $('#' + element.id).on('click', function () {
                 // Search for the labels
@@ -177,6 +187,21 @@
             })
         })
 
+        // Additional amount
+        $('additional_amountname').on('input', function () {
+            var amount = this.value
+            e = e || window.event
+            var decimal = amount.split('.')
+            var charCode = e.keyCode || e.which
+            if (charCode == 0 || charCode == 229) {
+                charCode = getKeyCode(this.value)
+            }
+
+            if (e.ctrlKey || e.shiftKey || (decimal.length > 1 && (charCode === 110 || charCode === 190)) || !accepted.includes(charCode)) {
+                e.preventDefault()
+            }
+        })
+
         // Cardholders
         $('input[name="additional_cardholders_number_radio"]').each(function (index, element) {
             $('#' + element.id).on('click', function () {
@@ -188,8 +213,35 @@
     }
 
     function setInitialState() {
-        // Check for membership
-        
+        //SESSION
+        var status = retrieveFromSession('military-status')
+        var membership = retrieveFromSession('membership-type')
+        var amount = retrieveFromSession('membership-amount')
+        var duration = retrieveFromSession('gift-duration')
+        var cardholders = retrieveFromSession('cardholders')
+
+        //MILITARY STATUS
+        // Check for status in the URL
+        if (urlParams.has()) {
+
+        } else if (status != null) {
+            //Check for status on session storage
+        } else {
+            // Check for status on form config
+        }
+
+        //AMOUNT
+
+
+        //MEMBERSHIP
+        // Check for membership in the URL
+        if (urlParams.has()) {
+
+        } else if (membership != null) {
+            //Check for membership on session storage
+        } else {
+            // Check for membership on form config
+        }
     }
 
     jQuery(document).ready(function () {
