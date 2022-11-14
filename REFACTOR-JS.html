@@ -22,20 +22,77 @@
     }
 
     // Key codes for numeric inputs
-    var accepted = [8, 37, 39, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105,
-        110, 190, 200
-    ]
+    var accepted = [8, 37, 39, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 110, 190, 200]
 
     // Returns the key code, fix implemented for mobile devices input fields
     var getKeyCode = function (str) {
         return str.charCodeAt(str.length - 1)
     }
 
+    // Updates the process button's text
+    function updateButtonText(amount) {
+        amount = amount.replace('$', '').replace(',', '')
+        var totalAmount = 0
+        var chosenAmount = parseFloat(amount)
+        var additionalAmount
+        var extraText
+        MEMBERSHIP_DURATION == 'anually' ? extraText = ' Anually' : extraText = ''
+        // Check for additional amount 
+        if (ADDITIONAL_AMOUNT == undefined || ADDITIONAL_AMOUNT == '') {
+            var totalAmount = chosenAmount
+        } else {
+            additionalAmount = parseFloat(ADDITIONAL_AMOUNT)
+            var totalAmount = chosenAmount + additionalAmount
+        }
+
+        $('#pstep_next').text('Donate $' + commaSeparated(totalAmount.toFixed(2)) + extraText)
+    }
+
     // GLOBAL SCOPE
     var MEMBERSHIP_TYPE = ''
     var MEMBERSHIP_AMOUNT
+    var ADDITIONAL_AMOUNT
     var MILITARY_STATUS = ''
     var CARDHOLDERS_COUNT = 0
+    var MEMBERSHIP_DURATION = ''
+
+    // CARDHOLDERS 
+    // It is important to add the fields here in the exact same order as they were added in the DF editor
+    var cardholders_fields = [
+        // Cardholder 1
+        [
+            'secondary_first_name_2_input',
+            'secondary_last_name_2_input',
+            'secondary_email_2_input',
+            'secondary_relationship_2_dropdown',
+            'secondary_age_2_radio'
+        ],
+        // Cardholder 2
+        [
+            'secondary_first_name_3_input',
+            'secondary_last_name_3_input',
+            'secondary_email_3_input',
+            'secondary_relationship_3_dropdown',
+            'secondary_age_3_radio'
+        ],
+        // Cardholder 3
+        [
+            'secondary_first_name_4_input',
+            'secondary_last_name_4_input',
+            'secondary_email_4_input',
+            'secondary_relationship_4_dropdown',
+            'secondary_age_4_radio'
+        ],
+        // Cardholder 4
+        [
+            'secondary_first_name_5_input',
+            'secondary_last_name_5_input',
+            'secondary_email_5_input',
+            'secondary_relationship_5_dropdown',
+            'secondary_age_6_radio'
+        ]
+    ]
+
 
     // FUNCTIONS
     function formatMembershipLevels() {
@@ -51,6 +108,33 @@
             $('#active-duty').append(element)
         })
 
+        formatCardholderSection()
+    }
+
+    function formatCardholderSection() {
+        for (var index = 1; index <= cardholders_fields.length; index++) {
+            var cardholder_inner = cardholders_fields[index - 1]
+            // Item
+            var cardholder_item = document.createElement('div')
+            cardholder_item.id = 'cardholder-item-' + index
+            cardholder_item.classList.add('cardholder-item')
+
+            // Title
+            var cardholder_item_title = document.createElement('h2')
+            cardholder_item_title.textContent = 'Additional Cardholder ' + index
+
+            // Append title to item
+            cardholder_item.appendChild(cardholder_item_title)
+
+            // Append fields to item           
+            cardholder_inner.forEach(function (field) {
+                var cardholder_field = $('.custom-field-container.form-row ').has('#' + field)
+                cardholder_item.appendChild(cardholder_field[0])
+            })
+
+            document.getElementById('cardholders-information-container').appendChild(cardholder_item)
+        }
+
         addEventListeners()
     }
 
@@ -59,10 +143,14 @@
             case '1':
                 $('#level_flexibleduration').val('Y:2')
                 storeInSession('gift-duration', 'Y:2')
+                MEMBERSHIP_DURATION = 'one'
+                setMembershipAmount(MEMBERSHIP_AMOUNT)
                 break;
             case '2':
                 $('#level_flexibleduration').val('Y:0')
                 storeInSession('gift-duration', 'Y:0')
+                MEMBERSHIP_DURATION = 'anually'
+                setMembershipAmount(MEMBERSHIP_AMOUNT)
                 break;
             default:
                 break;
@@ -93,74 +181,80 @@
     }
 
     function setMembershipType(type) {
-        if (String(type).includes('Lifetime')) {
-            MEMBERSHIP_TYPE = 'lifetime'
-        } else if (String(type).includes('Active')) {
-            MEMBERSHIP_TYPE = 'active'
-        } else if (String(type).includes('Veteran')) {
-            MEMBERSHIP_TYPE = 'veteran'
-        }
+        MEMBERSHIP_TYPE = type
         storeInSession('membership-type', MEMBERSHIP_TYPE)
-        renderGiftArray()
+        // renderGiftArray()
     }
 
     function setMembershipAmount(amount) {
         // MEMBERSHIP_AMOUNT = Number(String(amount).replace('$', '').replace(',', '')).toFixed(2)
-        MEMBERSHIP_AMOUNT = amount
-        console.log(MEMBERSHIP_AMOUNT)
+        MEMBERSHIP_AMOUNT = String(amount).trim()
         storeInSession('membership-amount', MEMBERSHIP_AMOUNT)
+
+        // Update the button text        
+        updateButtonText(MEMBERSHIP_AMOUNT)
     }
 
     function setCardholders(cardholders) {
         CARDHOLDERS_COUNT = Number(cardholders)
         storeInSession('cardholders', CARDHOLDERS_COUNT)
+        // Check how many cardholders will render 
+        if (CARDHOLDERS_COUNT == 0) {
+            $('#cardholders-information-container').hide()
+        } else {
+            $('.cardholder-item').hide()
+            for (var index = 1; index <= CARDHOLDERS_COUNT; index++) {
+                $('#cardholder-item-' + index).show()
+            }
+            $('#cardholders-information-container').show()
+        }
         renderGiftArray()
     }
 
     function renderGiftArray() {
+        var session_type = retrieveFromSession('membership-type')
+
         // Check for status
-        switch (MILITARY_STATUS) {
-            case '':
-                $('#lifetime').show()
-                $('#active-duty').show()
-                $('#veteran').show()
-                break;
-            case 'active':
-                $('#lifetime').show()
-                $('#active-duty').show()
-                $('#veteran').hide()
-                break;
-            case 'reserves':
-                $('#lifetime').show()
-                $('#active-duty').show()
-                $('#veteran').hide()
-                break;
-            case 'former':
-                $('#lifetime').show()
-                $('#active-duty').hide()
-                $('#veteran').show()
-                break;
-            case 'retired':
-                $('#lifetime').show()
-                $('#active-duty').hide()
-                $('#veteran').show()
-                break;
-            default:
-                break;
+        if (MILITARY_STATUS == '') {
+            $('#lifetime').show()
+            $('#active-duty').show()
+            $('#veteran').show()
+        } else if (MILITARY_STATUS == 'active' || MILITARY_STATUS == 'reserves') {
+            $('#lifetime').show()
+            $('#active-duty').show()
+            $('#veteran').hide()
+        } else if (MILITARY_STATUS == 'former' || MILITARY_STATUS == 'retired') {
+            $('#lifetime').show()
+            $('#active-duty').hide()
+            $('#veteran').show()
         }
+
         // Check for cardholders
         if (CARDHOLDERS_COUNT == 0) {
-            $('#lifetime div.donation-level-container:first-child').show()
-            $('#active-duty div.donation-level-container:first-child').show()
-            $('#veteran div.donation-level-container:first-child').show()
+            $('#lifetime div.donation-level-container:first-child').addClass('clickable').show()
+            $('#active-duty div.donation-level-container:first-child').addClass('clickable').show()
+            $('#veteran div.donation-level-container:first-child').addClass('clickable').show()
 
-            $('#lifetime div.donation-level-container').not(':first-child').hide()
-            $('#active-duty div.donation-level-container').not(':first-child').hide()
-            $('#veteran div.donation-level-container').not(':first-child').hide()
+            $('#lifetime div.donation-level-container').not(':first-child').removeClass('clickable').hide()
+            $('#active-duty div.donation-level-container').not(':first-child').removeClass('clickable').hide()
+            $('#veteran div.donation-level-container').not(':first-child').removeClass('clickable').hide()
         } else {
-            $('.donation-level-container:contains(' + CARDHOLDERS_COUNT + ' Cardholder)').show();
-            $('.donation-level-container:not(:contains(' + CARDHOLDERS_COUNT + ' Cardholder))').hide();
+            $('.donation-level-container:contains(' + CARDHOLDERS_COUNT + ' Cardholder)').addClass('clickable').show();
+            $('.donation-level-container:not(:contains(' + CARDHOLDERS_COUNT + ' Cardholder))').removeClass('clickable').hide();
         }
+
+
+        // Check the previously selected membership level
+        if (session_type != null) {
+            if (session_type.includes('Lifetime Benefactor')) {
+                $('.clickable').find('.donation-level-label-container:contains("Lifetime Benefactor")').parent().prev().find('input[name="level_flexibleexpanded"]').trigger('click')
+            } else if (session_type.includes('Veteran Membership')) {
+                $('.clickable').find('.donation-level-label-container:contains("Veteran Membership")').parent().prev().find('input[name="level_flexibleexpanded"]').trigger('click')
+            } else if (session_type.includes('Active Duty Membership')) {
+                $('.clickable').find('.donation-level-label-container:contains("Active Duty Membership")').parent().prev().find('input[name="level_flexibleexpanded"]').trigger('click')
+            }
+        }
+
     }
 
     function addEventListeners() {
@@ -187,8 +281,8 @@
             })
         })
 
-        // Additional amount
-        $('additional_amountname').on('input', function () {
+        // Additional amount     
+        document.getElementById('additional_amountname').addEventListener('blur', function (e) {
             var amount = this.value
             e = e || window.event
             var decimal = amount.split('.')
@@ -197,8 +291,78 @@
                 charCode = getKeyCode(this.value)
             }
 
-            if (e.ctrlKey || e.shiftKey || (decimal.length > 1 && (charCode === 110 || charCode === 190)) || !accepted.includes(charCode)) {
+            if (e.ctrlKey || e.shiftKey || (decimal.length > 1 && (charCode === 110 || charCode === 190)) || !
+                accepted.includes(charCode)) {
                 e.preventDefault()
+            } else {
+                setTimeout(function () {
+                    ADDITIONAL_AMOUNT = document.getElementById('additional_amountname').value
+                    storeInSession('additional-amount', ADDITIONAL_AMOUNT)
+                    setMembershipAmount(MEMBERSHIP_AMOUNT)
+                }, 50)
+            }
+        })
+
+        document.getElementById('additional_amountname').addEventListener('input', function (e) {
+            var amount = this.value
+            e = e || window.event
+            var decimal = amount.split('.')
+            var charCode = e.keyCode || e.which
+            if (charCode == 0 || charCode == 229) {
+                charCode = getKeyCode(this.value)
+            }
+
+            if (e.ctrlKey || e.shiftKey || (decimal.length > 1 && (charCode === 110 || charCode === 190)) || !
+                accepted.includes(charCode)) {
+                e.preventDefault()
+            } else {
+                setTimeout(function () {
+                    ADDITIONAL_AMOUNT = document.getElementById('additional_amountname').value
+                    storeInSession('additional-amount', ADDITIONAL_AMOUNT)
+                    setMembershipAmount(MEMBERSHIP_AMOUNT)
+                }, 50)
+            }
+        })
+
+        document.getElementById('additional_amountname').addEventListener('keydown', function (e) {
+            var amount = this.value
+            e = e || window.event
+            var decimal = amount.split('.')
+            var charCode = e.keyCode || e.which
+            if (charCode == 0 || charCode == 229) {
+                charCode = getKeyCode(this.value)
+            }
+
+            if (e.ctrlKey || e.shiftKey || (decimal.length > 1 && (charCode === 110 || charCode === 190)) || !
+                accepted.includes(charCode)) {
+                e.preventDefault()
+            } else {
+                setTimeout(function () {
+                    ADDITIONAL_AMOUNT = document.getElementById('additional_amountname').value
+                    storeInSession('additional-amount', ADDITIONAL_AMOUNT)
+                    setMembershipAmount(MEMBERSHIP_AMOUNT)
+                }, 50)
+            }
+        })
+
+        document.getElementById('additional_amountname').addEventListener('change', function (e) {
+            var amount = this.value
+            e = e || window.event
+            var decimal = amount.split('.')
+            var charCode = e.keyCode || e.which
+            if (charCode == 0 || charCode == 229) {
+                charCode = getKeyCode(this.value)
+            }
+
+            if (e.ctrlKey || e.shiftKey || (decimal.length > 1 && (charCode === 110 || charCode === 190)) || !
+                accepted.includes(charCode)) {
+                e.preventDefault()
+            } else {
+                setTimeout(function () {
+                    ADDITIONAL_AMOUNT = document.getElementById('additional_amountname').value
+                    storeInSession('additional-amount', ADDITIONAL_AMOUNT)
+                    setMembershipAmount(MEMBERSHIP_AMOUNT)
+                }, 50)
             }
         })
 
@@ -214,33 +378,94 @@
 
     function setInitialState() {
         //SESSION
-        var status = retrieveFromSession('military-status')
-        var membership = retrieveFromSession('membership-type')
-        var amount = retrieveFromSession('membership-amount')
-        var duration = retrieveFromSession('gift-duration')
-        var cardholders = retrieveFromSession('cardholders')
+        var session_status = retrieveFromSession('military-status')
+        var session_membership = retrieveFromSession('membership-type')
+        var session_amount = retrieveFromSession('membership-amount')
+        var session_additional_amount = retrieveFromSession('additional-amount')
+        var session_duration = retrieveFromSession('gift-duration')
+        var session_cardholders = retrieveFromSession('cardholders')
+
+        function triggerStatus(status) {
+            switch (status) {
+                case 'active':
+                    $('input[value=" Active"').click()
+                    break;
+                case 'reserves':
+                    $('input[value=" Reserves"').click()
+                    break;
+                case 'former':
+                    $('input[value=" Former"').click()
+                    break;
+                case 'retired':
+                    $('input[value=" Retired"').click()
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function triggerCardholders(cardholders) {
+            $('#additional_cardholders_number_radio_' + cardholders).click()
+        }
+
+        function triggerLevelFromURL(level) {
+            $('.donation-level-amount-container:contains($' + level + '.00)').click()
+        }
+
+        function triggerLevelFromSession(level) {
+            $('.donation-level-amount-container:contains(' + level + ')').click()
+        }
+
+        function triggerRenewalFromURL(duration) {
+            duration == 'anually' ? $('#level_flexiblegift_type2').click() : $('#level_flexiblegift_type1').click()
+        }
+
+        function triggerRenewalFromSession(duration) {
+            duration == 'Y:0' ? $('#level_flexiblegift_type2').click() : $('#level_flexiblegift_type1').click()
+        }
+
+        //MEMBERSHIP LEVEL (AMOUNT)
+        if (urlParams.has('amt')) {
+            triggerLevelFromURL(urlParams.get('amt'))
+        } else if (session_amount != null) {
+            //Check for status on session storage
+            triggerLevelFromSession(session_amount)
+        } else {
+            $('input[name="level_flexibleexpanded"]').first().trigger('click')
+        }
+
+        // ADDITIONAL AMOUNT
+        if (session_additional_amount != null || session_additional_amount != '') {
+            $('#additional_amountname').val(session_additional_amount)
+            $('#additional_amountname').trigger('change')
+            $('#additional_amountname').trigger('blur')
+        }
+
+        //MEMBERSHIP TYPE
+        // Check for membership in the URL
+        if (urlParams.has('renew')) {
+            triggerRenewalFromURL(urlParams.get('renew'))
+        } else if (session_duration != null) {
+            //Check for membership on session storage
+            triggerRenewalFromSession(session_duration)
+        } else {
+            $('#level_flexiblegift_type2').trigger('click')
+        }
 
         //MILITARY STATUS
         // Check for status in the URL
-        if (urlParams.has()) {
-
-        } else if (status != null) {
+        if (urlParams.has('status')) {
+            triggerStatus(urlParams.get('status'))
+        } else if (session_status != null) {
             //Check for status on session storage
-        } else {
-            // Check for status on form config
+            triggerStatus(session_status)
         }
 
-        //AMOUNT
-
-
-        //MEMBERSHIP
-        // Check for membership in the URL
-        if (urlParams.has()) {
-
-        } else if (membership != null) {
-            //Check for membership on session storage
+        // CARDHOLDERS
+        if (session_cardholders != null) {
+            triggerCardholders(session_cardholders)
         } else {
-            // Check for membership on form config
+            triggerCardholders(0)
         }
     }
 
