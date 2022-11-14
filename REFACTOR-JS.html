@@ -31,6 +31,7 @@
 
     // Updates the process button's text
     function updateButtonText(amount) {
+        ADDITIONAL_AMOUNT = retrieveFromSession('additional-amount')
         amount = amount.replace('$', '').replace(',', '')
         var totalAmount = 0
         var chosenAmount = parseFloat(amount)
@@ -42,6 +43,7 @@
             var totalAmount = chosenAmount
         } else {
             additionalAmount = parseFloat(ADDITIONAL_AMOUNT)
+            console.log('Additional amount: ' + additionalAmount)
             var totalAmount = chosenAmount + additionalAmount
         }
 
@@ -255,6 +257,8 @@
             }
         }
 
+        setMembershipAmount(MEMBERSHIP_AMOUNT)
+
     }
 
     function addEventListeners() {
@@ -424,6 +428,13 @@
             duration == 'Y:0' ? $('#level_flexiblegift_type2').click() : $('#level_flexiblegift_type1').click()
         }
 
+        // ADDITIONAL AMOUNT
+        if (session_additional_amount != null || session_additional_amount != '') {
+            $('#additional_amountname').val(session_additional_amount)
+            $('#additional_amountname').trigger('change')
+            $('#additional_amountname').trigger('blur')
+        }
+
         //MEMBERSHIP LEVEL (AMOUNT)
         if (urlParams.has('amt')) {
             triggerLevelFromURL(urlParams.get('amt'))
@@ -432,13 +443,6 @@
             triggerLevelFromSession(session_amount)
         } else {
             $('input[name="level_flexibleexpanded"]').first().trigger('click')
-        }
-
-        // ADDITIONAL AMOUNT
-        if (session_additional_amount != null || session_additional_amount != '') {
-            $('#additional_amountname').val(session_additional_amount)
-            $('#additional_amountname').trigger('change')
-            $('#additional_amountname').trigger('blur')
         }
 
         //MEMBERSHIP TYPE
